@@ -1,0 +1,453 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <meta charset="utf-8" /><title>
+    limxwu
+        |
+        Http客户端连接数占用分析
+      
+
+    
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.min.49bfd2dbac6030a3a24fe7cb768d3d0dd9d223458e88f7d6cf5fe7aa806aaa2d.css" integrity="sha256-Sb/S26xgMKOiT&#43;fLdo09DdnSI0WOiPfWz1/nqoBqqi0=" crossorigin="anonymous" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/faviconsfavicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/faviconsapple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/faviconsfavicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/faviconsfavicon-16x16.png" />
+
+  <link rel="canonical" href="https://www.limxwu.fun/posts/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Http客户端连接数占用分析">
+  <meta name="twitter:description" content="问题描述 Java应用程序中调用阿里云三方服务，阿里云告警服务SLB连接数逼近上限5000。">
+
+
+
+  
+  <meta property="og:url" content="https://www.limxwu.fun/posts/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="Http客户端连接数占用分析">
+  <meta property="og:description" content="问题描述 Java应用程序中调用阿里云三方服务，阿里云告警服务SLB连接数逼近上限5000。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-10T06:33:21+00:00">
+    <meta property="article:modified_time" content="2024-08-10T06:33:21+00:00">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Http客户端连接数占用分析",
+        "headline": "Http客户端连接数占用分析",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch1 id=\u0022问题描述\u0022\u003e问题描述\u003c\/h1\u003e\n\u003cp\u003eJava应用程序中调用阿里云三方服务，阿里云告警服务SLB连接数逼近上限5000。\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.limxwu.fun\/posts\/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2024-08-10T06:33:21.00Z",
+        "datePublished": "2024-08-10T06:33:21.00Z",
+        "dateModified": "2024-08-10T06:33:21.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "https://www.limxwu.fun/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/www.limxwu.fun\/faviconsfavicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/www.limxwu.fun\/posts\/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html",
+        "wordCount" : "1504",
+        "genre" : [ ],
+        "keywords" : [ ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Http客户端连接数占用分析</h1>
+      
+      <h1 id="问题描述">问题描述</h1>
+<p>Java应用程序中调用阿里云三方服务，阿里云告警服务SLB连接数逼近上限5000。</p>
+<p>排查服务调用代码，使用okHttp3Client发起调用，默认使用长连接发起Http请求。</p>
+<h1 id="问题分析">问题分析</h1>
+<p>由于调用阿里云服务的机器数量有限，如果正常使用http长连接，会在同一个tcp连接中发起多个http请求，不可能达到4000多的tcp连接数，极有可能是每次发起HTTP请求都是建立新的TCP连接，并且维持长连接导致tcp连接得不到释放导致连接数耗尽。</p>
+<h1 id="方案验证">方案验证</h1>
+<ol>
+<li>
+<p>搭建nginx服务器，模拟SLB并监控tcp连接数。在Debian linux虚拟机中安装nginx，nginx开放801、802、803端口，用来模拟客户端到不通域的连接。</p>
+</li>
+<li>
+<p>编写测试demo</p>
+<ol>
+<li>
+<p>原代码中每次请求阿里云服务都会新建一个okHttpClinet，以这种的方式请求目标801端口，构成对照组，5个线程，每个线程请求200次。</p>
+</li>
+<li>
+<p>使用原代码中方式构建httpClient，在请求头中添加Connection:close，建立短连接，请求802端口，5个线程，每个线程请求200次。</p>
+</li>
+<li>
+<p>使用单例创建HttpClient，使用默认长连接，请求803端口，5个线程，每个线程请求200次。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>运行demo并监控，在nginx服务器中通过命令 watch -n 1 “netstat -nap|grep 端口号”，分别监控801、802、803端口的连接数。</p>
+</li>
+</ol>
+<p>未运行demo时，可以看到nginx进程（5887）监听三个端口传入连接，监控如下：</p>
+<p><img src="https://file.limxwu.fun/blog/202408101426125.png" alt="image-20240810142600055"></p>
+<p>运行demo中，可以看到801端口有大量ESTABLISHED状态的连接，表明在801端口有大量的长连接在传输数据；在802端口中有大量的TIME_WAIT状态连接，等待进入最后的CLOSE状态；803端口则维持少量连接用来传输HTTP请求。</p>
+<p><img src="https://file.limxwu.fun/blog/202408101426571.png" alt="image-20240810142609503"></p>
+<p>继续监控会发现，在Spring环境下运行demo，会发现三个端口的连接都会维持一部分时间后关闭，其中802的连接60秒后先关闭，801、803的连接会先由ESTABLISHED（75秒）变为FIN_WAIT_2（60秒）后再维持一段时间关闭。</p>
+<p>使用main方法直接启动demo，801、803端口的连接会在请求结束后立马关闭，802的连接仍会维持一分钟。</p>
+<p>为探究其中的原因及机制，单线程各两次请求分别对三种请求进行抓包分析。</p>
+<p><img src="https://file.limxwu.fun/blog/202408101428515.png" alt="image-20240810142640670"></p>
+<p>Spring 801抓包：</p>
+<p><img src="https://file.limxwu.fun/blog/202408101427638.png" alt="image-20240810142705580"></p>
+<p>可以看到通过建立两次TCP连接发起两次HTTP请求，并且在75s开始断开TCP连接，断开阶段由服务器发起断开请求，收到客户端的ack后进入FIN_WAIT_2，由于后续没有收到客户端的挥手包，触发FIN_WAIT_2超时机制释放掉连接。</p>
+<p>Main801抓包：</p>
+<p><img src="https://file.limxwu.fun/blog/202408101427223.png" alt="image-20240810142715164"></p>
+<p>对比Spring环境下的抓包，可以看到在两次请求结束后由客户端向服务器发送两个RST包，用于在进程结束时由客户端发送复位包关闭异常连接。</p>
+<p>802抓包：</p>
+<p><img src="https://file.limxwu.fun/blog/202408101427200.png" alt="image-20240810142724140"></p>
+<p>802端口也是通过建立两个TCP连接完成了两次的HTTP请求，其中在挥手阶段，由服务器主动发起断开请求，在完整的完成四次挥手后，断开发起方（服务器）进入到TIME_WAIT阶段，其中在Linux的内核中，TCP/IP协议的TIME-WAIT状态持续60秒且不可轻易修改。</p>
+<h1 id="结论">结论</h1>
+<ol>
+<li>
+<p>原有的代码调用阿里云服务方式中，每次请求都会建立新的连接，并且连接持续时长为75s（keepalive）+60s（FIN_WAIT_2超时）=135s。</p>
+</li>
+<li>
+<p>在请求头中加入Connecttion:close后，每次都会建立新的短tcp连接，但是由于发起断开连接方为服务器，服务器tcp连接会在进入TIME_WAIT后60s释放连接。</p>
+</li>
+</ol>
+<p>短链接方案能一定程度上缓解SLB连接数耗尽的问题，但要想彻底解决还需要正确的使用http长连接。</p>
+
+</div>
+    <div class="post__footer">
+      
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

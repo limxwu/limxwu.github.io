@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lives on 布知花树</title>
+    <link>http://localhost:1313/life/</link>
+    <description>Recent content in Lives on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 21 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/life/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>钱塘江大桥</title>
+      <link>http://localhost:1313/life/%E5%A4%95%E9%98%B3%E4%B8%8B%E7%81%AB%E8%BD%A6%E9%A9%B6%E8%BF%87%E9%92%B1%E5%A1%98%E6%B1%9F%E5%A4%A7%E6%A1%A5/</link>
+      <pubDate>Thu, 21 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/life/%E5%A4%95%E9%98%B3%E4%B8%8B%E7%81%AB%E8%BD%A6%E9%A9%B6%E8%BF%87%E9%92%B1%E5%A1%98%E6%B1%9F%E5%A4%A7%E6%A1%A5/</guid>
+      
+        <description>23年12月到杭州出差，经过钱塘江，刚好遇见夕阳下火车由西向东驶来，轰鸣声由远及近....</description>
+      
+    </item>
+    
+    <item>
+      <title>清明南京游</title>
+      <link>http://localhost:1313/life/%E6%B8%85%E6%98%8E%E5%8D%97%E4%BA%AC%E6%B8%B8/</link>
+      <pubDate>Sat, 20 Apr 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/life/%E6%B8%85%E6%98%8E%E5%8D%97%E4%BA%AC%E6%B8%B8/</guid>
+      
+        <description>忙里偷闲，南京两日游</description>
+      
+    </item>
+    
+  </channel>
+</rss>

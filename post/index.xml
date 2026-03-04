@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 布知花树</title>
+    <link>http://localhost:1313/post/</link>
+    <description>Recent content in Posts on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 12 Sep 2025 12:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitFlow下Snap与正式版本的管理</title>
+      <link>http://localhost:1313/post/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Fri, 12 Sep 2025 12:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86/</guid>
+      
+        <description>&lt;p&gt;基于GitHub的GitFlow如何管理java的snapshot与正式版本，这是一个非常经典且重要的问题。将 GitHub Flow 的敏捷性与 Java 项目的 Snapshot/Release 版本管理相结合，可以构建一个高效且可靠的发布流程。&lt;/p&gt;
+&lt;p&gt;下面我将详细阐述基于 GitHub Flow 的最佳实践，包括分支策略、版本命名约定、自动化流程以及具体操作步骤。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>conda常用命令</title>
+      <link>http://localhost:1313/post/conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Mon, 08 Sep 2025 12:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      
+        <description>&lt;p&gt;更新conda&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;conda update conda
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;创建虚拟环境&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;conda create -n env_name python=3.8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查看有哪些虚拟环境&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>debian安装wireguard</title>
+      <link>http://localhost:1313/post/debian%E5%AE%89%E8%A3%85wireguard/</link>
+      <pubDate>Thu, 28 Aug 2025 12:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/debian%E5%AE%89%E8%A3%85wireguard/</guid>
+      
+        <description>&lt;h1 id=&#34;安装wireguard&#34;&gt;安装wireguard&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;apt install wireguard
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;设置配置文件&#34;&gt;设置配置文件&lt;/h1&gt;
+&lt;p&gt;在&lt;code&gt;/etc/wireguard&lt;/code&gt; 路径下创建配置文件wg.conf&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Interface]
+PrivateKey = ****
+Address = 192.168.xxx.xx/32
+# ListenPort not defined
+DNS = 192.168.xxx.xxx
+
+[Peer]
+PublicKey = ****
+PresharedKey = ****
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = *****:****
+PersistentKeepAlive = 25
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;启动服务&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>gitflow</title>
+      <link>http://localhost:1313/post/gitflow/</link>
+      <pubDate>Sun, 24 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/gitflow/</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;Remove release branch .&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;gitflow&#34;&gt;gitflow&lt;/h1&gt;
+&lt;div class=&#34;mermaid&#34;&gt;%%{init: { &#39;logLevel&#39;: &#39;debug&#39;, &#39;theme&#39;: &#39;base&#39;, &#39;gitGraph&#39;: {&#39;showBranches&#39;: true,&#39;mainBranchName&#39;:&#39;master&#39;}} }%%
+gitGraph
+    commit id:&#34;First Commit&#34;
+
+    branch develop
+    checkout develop
+    commit id:&#34;change version 1.0.0-snapshot&#34;
+    branch sit-environmet
+    branch feature/f1
+    branch feature/f2
+    checkout feature/f1
+    commit
+    commit
+    checkout sit-environmet
+    merge feature/f1
+
+    checkout feature/f2
+    commit
+    commit
+    checkout sit-environmet
+    merge feature/f2
+    checkout feature/f1
+    commit
+    checkout sit-environmet
+    merge feature/f1
+    
+    checkout feature/f2
+    commit
+    commit
+    checkout sit-environmet
+    merge feature/f2
+  
+    checkout develop
+    merge feature/f1
+
+    checkout master
+    merge develop
+    commit tag:&#34;v1.0.0&#34;
+
+    checkout develop
+    commit id:&#34;change version 1.0.1-snapshot&#34;
+
+    checkout sit-environmet
+    merge develop type:HIGHLIGHT
+
+
+    checkout master
+    branch fixbug/fb1
+    commit
+    checkout master
+    merge fixbug/fb1
+
+    checkout develop
+    merge fixbug/fb1
+
+    branch feature/f3
+    commit
+    checkout sit-environmet
+    merge feature/f3
+    checkout feature/f3
+    commit
+    commit
+    checkout feature/f2
+    commit
+    commit
+    checkout sit-environmet
+    merge feature/f2
+    checkout develop
+    merge feature/f2
+&lt;/div&gt;
+
+&lt;p&gt;master:当前稳定的最新代码，每次develop并入产生新版本号，生产与预生产
+develop:当前稳定的最新代码，版本号snapshot，与master分支基本一致，feature的签出分支，等当前阶段开发任务的各特性分支合并到develop后，再将develop合并到master分支
+feature:特性分支
+sit-environmet:测试（开发）集成环境测试分支
+bugfix:由master签出，修复后合并master&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>java基本类型转换</title>
+      <link>http://localhost:1313/post/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</link>
+      <pubDate>Wed, 13 Aug 2025 12:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</guid>
+      
+        <description>&lt;h1 id=&#34;引言&#34;&gt;引言：&lt;/h1&gt;
+&lt;p&gt;读JDK17源码中，发现Bits类中有这样一段代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;getBoolean&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;byte&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;getChar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;byte&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0xFF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;                       &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;short&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;getShort&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;byte&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;short&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0xFF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;                        &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;getInt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;byte&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0xFF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;               &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0xFF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;               &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0xFF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;               &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;       &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这几个方法作用都是从byte[]数组的偏移量&lt;code&gt;off&lt;/code&gt;中取出对应类型的基础数据类型，除了最高位字节其他字节都&lt;code&gt;&amp;amp;0xFF&lt;/code&gt;后按照大端模式进行移位操作，但是&lt;code&gt;byte&lt;/code&gt;长度为一个字节，&lt;code&gt;&amp;amp;0xFF&lt;/code&gt;后仍然为其本身，其中的意义是什么呢？&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Http客户端连接数占用分析</title>
+      <link>http://localhost:1313/post/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/</link>
+      <pubDate>Sat, 10 Aug 2024 06:33:21 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90/</guid>
+      
+        <description>&lt;h1 id=&#34;问题描述&#34;&gt;问题描述&lt;/h1&gt;
+&lt;p&gt;Java应用程序中调用阿里云三方服务，阿里云告警服务SLB连接数逼近上限5000。&lt;/p&gt;
+&lt;p&gt;排查服务调用代码，使用okHttp3Client发起调用，默认使用长连接发起Http请求。&lt;/p&gt;
+&lt;h1 id=&#34;问题分析&#34;&gt;问题分析&lt;/h1&gt;
+&lt;p&gt;由于调用阿里云服务的机器数量有限，如果正常使用http长连接，会在同一个tcp连接中发起多个http请求，不可能达到4000多的tcp连接数，极有可能是每次发起HTTP请求都是建立新的TCP连接，并且维持长连接导致tcp连接得不到释放导致连接数耗尽。&lt;/p&gt;
+&lt;h1 id=&#34;方案验证&#34;&gt;方案验证&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;搭建nginx服务器，模拟SLB并监控tcp连接数。在Debian linux虚拟机中安装nginx，nginx开放801、802、803端口，用来模拟客户端到不通域的连接。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编写测试demo&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;原代码中每次请求阿里云服务都会新建一个okHttpClinet，以这种的方式请求目标801端口，构成对照组，5个线程，每个线程请求200次。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Openwrt配置BGP</title>
+      <link>http://localhost:1313/post/openwrt%E9%85%8D%E7%BD%AEbgp/</link>
+      <pubDate>Wed, 08 May 2024 08:50:44 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/openwrt%E9%85%8D%E7%BD%AEbgp/</guid>
+      
+        <description>&lt;h2 id=&#34;安装frr&#34;&gt;安装FRR&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>微服务的一些思考</title>
+      <link>http://localhost:1313/post/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</link>
+      <pubDate>Wed, 20 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</guid>
+      
+        <description>&lt;p&gt;微服务架构的优点包括：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;松耦合：微服务架构将应用程序拆分成多个小型服务，每个服务独立部署和运行。这导致系统的各个组件之间的耦合度降低，使得每个服务可以独立进行开发、部署和扩展，从而提高了系统的灵活性和可维护性。&lt;/li&gt;
+&lt;li&gt;可伸缩性：由于微服务架构的每个服务都是独立部署的，可以根据需求独立地进行横向扩展。这使得系统可以更好地处理负载的增加，提高了系统的性能和可靠性。&lt;/li&gt;
+&lt;li&gt;独立开发和部署：微服务架构使得团队可以分别开发和部署各个服务，不同服务之间的开发和部署可以独立进行。这使得团队可以更高效地开发和部署新功能，同时减少了影响整个系统的风险。&lt;/li&gt;
+&lt;li&gt;技术多样性：微服务架构允许不同的服务采用不同的技术栈。这意味着团队可以选择最适合服务需求的技术，从而提高了开发效率和灵活性。&lt;/li&gt;
+&lt;li&gt;容错性和可恢复性：由于微服务架构的每个服务都是独立运行的，一个服务的故障不会影响整个系统的运行。而且，当一个服务发生故障时，其他服务仍然可以继续运行，从而提高了系统的容错性和可恢复性。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;总的来说，微服务架构可以提供更高的灵活性、可伸缩性和可维护性，同时允许团队更快地开发和部署新功能，并更好地应对故障和变化的需求。&lt;/p&gt;
+&lt;p&gt;注册中心在微服务架构中扮演着至关重要的角色，其存在有以下几方面的意义：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;服务发现和注册：注册中心用于维护系统中所有可用的微服务实例的信息，包括服务名称、地址、端口等。当一个服务启动时，它会向注册中心注册自己的信息，其他服务可以通过注册中心查询需要调用的服务的信息，从而实现服务发现。&lt;/li&gt;
+&lt;li&gt;负载均衡：注册中心可以根据服务实例的负载情况，动态地将请求路由到负载相对较低的实例上，实现负载均衡。这有助于提高系统的性能和可用性。&lt;/li&gt;
+&lt;li&gt;故障转移和恢复：当一个服务实例发生故障时，注册中心可以感知到该实例的不可用，并将其标记为下线，从而避免将请求发送到故障的实例上。同时，这也有助于系统进行故障的转移和恢复，确保系统的稳定性。&lt;/li&gt;
+&lt;li&gt;配置管理：注册中心常常也用于存储和管理微服务的配置信息，包括服务的版本、环境配置等。通过注册中心，可以实现对配置信息的集中管理和动态更新，实现系统的配置灵活性和可维护性。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;总的来说，注册中心的存在可以帮助微服务架构实现服务发现、负载均衡、故障转移和恢复、配置管理等功能，从而提高系统的可靠性、可伸缩性和可维护性。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>calico部署BGP模式的高可用k8s集群</title>
+      <link>http://localhost:1313/post/simpread-how-to-install-kubernetes-cluster-on-debian-12-/</link>
+      <pubDate>Thu, 14 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/simpread-how-to-install-kubernetes-cluster-on-debian-12-/</guid>
+      
+        <description>&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文主要在 centos7 系统上基于 containerd 和 v3.24.5 版本的 calico 组件部署 v1.26.0 版本的堆叠 ETCD 高可用 k8s 原生集群，在 LoadBalancer 上选择了 PureLB 和 calico 结合 bird 实现 BGP 路由可达的 K8S 集群部署。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>延迟队列的实现方式</title>
+      <link>http://localhost:1313/post/%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F/</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文摘自&lt;a href=&#34;https://cloud.tencent.com/developer/article/1659393&#34;&gt;一口气说出 6种 延时队列的实现方法，面试官也得服&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;什么是延时队列&#34;&gt;什么是延时队列&lt;/h1&gt;
+&lt;p&gt;顾名思义：首先它要具有队列的特性，再给它附加一个延迟消费队列消息的功能，也就是说可以指定队列中的消息在哪个时间点被消费。&lt;/p&gt;
+&lt;p&gt;延时队列在项目中的应用还是比较多的，尤其像电商类平台：&lt;/p&gt;
+&lt;p&gt;1、订单成功后，在30分钟内没有支付，自动取消订单&lt;/p&gt;
+&lt;p&gt;2、外卖平台发送订餐通知，下单成功后60s给用户推送短信。&lt;/p&gt;
+&lt;p&gt;3、如果订单一直处于某一个未完结状态时，及时处理关单，并退还库存&lt;/p&gt;
+&lt;p&gt;4、淘宝新建商户一个月内还没上传商品信息，将冻结商铺等&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>mirotalk-视频会议</title>
+      <link>http://localhost:1313/post/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/</link>
+      <pubDate>Mon, 04 Mar 2024 23:50:02 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/</guid>
+      
+        <description>&lt;h2 id=&#34;基于webrtc---p2p---简单安全快速的实时视频会议&#34;&gt;基于WebRTC - P2P - 简单、安全、快速的实时视频会议&lt;/h2&gt;
+&lt;iframe src=&#34;https://p2p.mirotalk.com/join/75448RedBrick&#34; width=&#34;100%&#34; height=&#34;800px&#34; frameborder=&#34;0&#34; allowfullscreen=&#34;true&#34; framespacing=&#34;0&#34; style=&#34;display: inline-block&#34; allow=&#34;camera; microphone&#34;&gt;&lt;/iframe&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>simpread-k8s 系列 13-calico 部署 BGP 模式的高可用 k8s 集群 - TinyChen&#39;s Studio - 互联网技术学习工作经验分享</title>
+      <link>http://localhost:1313/post/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</link>
+      <pubDate>Wed, 28 Feb 2024 14:07:49 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文主要在 centos7 系统上基于 containerd 和 v3.24.5 版本的 calico 组件部署 v1.26.0 版本的堆叠 ETCD 高可用 k8s 原生集群，在 LoadBalancer 上选择了 PureLB 和 calico 结合 bird 实现 BGP 路由可达的 K8S 集群部署。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>BGP是什么？如何工作的</title>
+      <link>http://localhost:1313/post/bgp%E6%98%AF%E4%BB%80%E4%B9%88%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
+      <pubDate>Tue, 27 Feb 2024 11:07:29 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/bgp%E6%98%AF%E4%BB%80%E4%B9%88%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://info.support.huawei.com/info-finder/encyclopedia/zh/BGP.html&#34;&gt;info.support.huawei.com&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;BGP（Border Gateway Protocol）是一种用于自治系统 AS（Autonomous System）之间的动态路由协议，BGP4 + 是对 BGP 的扩展。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Spring配置文件优先级</title>
+      <link>http://localhost:1313/post/spring%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7/</link>
+      <pubDate>Thu, 22 Feb 2024 14:21:06 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/spring%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7/</guid>
+      
+        <description>&lt;h1 id=&#34;springboot配置文件优先级&#34;&gt;SpringBoot配置文件优先级&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config&#34;&gt;3.2.2官方文档：&lt;/a&gt;Spring Boot 允许您外部化您的配置，以便您可以在不同的环境中使用相同的应用程序代码。您可以使用各种外部配置源，包括 Java 属性文件、YAML 文件、环境变量和命令行参数。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Spring Boot 使用一种非常特殊的 &lt;code&gt;PropertySource&lt;/code&gt;顺序，旨在允许合理地覆盖值。后面的属性源可以覆盖前面定义的值。按以下顺序考虑来源：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Debian12 iptables防火墙配置</title>
+      <link>http://localhost:1313/post/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 08 Feb 2024 09:48:29 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/</guid>
+      
+        <description>&lt;h2 id=&#34;保存规则&#34;&gt;保存规则&lt;/h2&gt;
+&lt;h3 id=&#34;通过-iptables-persistent-保存&#34;&gt;通过 iptables-persistent 保存&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;netfilter-persistent save
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;通过iptables保存&#34;&gt;通过iptables保存&lt;/h3&gt;
+&lt;p&gt;要稍后保存规则设置，请使用命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iptables-save &amp;gt; /etc/iptables/rules.v4
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ip6tables-save &amp;gt; /etc/iptables/rules.v6
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;恢复规则&#34;&gt;恢复规则&lt;/h2&gt;
+&lt;h3 id=&#34;现行规则的恢复和替换&#34;&gt;现行规则的恢复和替换&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iptables-restore &amp;lt; /etc/iptables/rules.v4
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;恢复同时保持当前规则&#34;&gt;恢复同时保持当前规则&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;iptables-restore -n &amp;lt; /etc/iptables/rules.v4
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;iptables的使用&#34;&gt;iptables的使用&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;语法：&lt;/strong&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>常用一句话脚本</title>
+      <link>http://localhost:1313/post/%E5%B8%B8%E7%94%A8%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Wed, 07 Feb 2024 09:54:02 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E5%B8%B8%E7%94%A8%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%84%9A%E6%9C%AC/</guid>
+      
+        <description>&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;用途&lt;/th&gt;
+          &lt;th&gt;命令&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Docker安装&lt;/td&gt;
+          &lt;td&gt;curl -s &lt;a href=&#34;https://get.docker.com&#34;&gt;https://get.docker.com&lt;/a&gt;| sudo bash&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Zerotier安装&lt;/td&gt;
+          &lt;td&gt;curl -s &lt;a href=&#34;https://install.zerotier.com&#34;&gt;https://install.zerotier.com&lt;/a&gt;| sudo bash&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;获取IP&lt;/td&gt;
+          &lt;td&gt;curl -s &lt;a href=&#34;https://ipinfo.io&#34;&gt;https://ipinfo.io&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;服务器测速&lt;/td&gt;
+          &lt;td&gt;curl -Lso- bench.sh| bash&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 请勿用于商业用途，仅供个人测试学习之用，请遵守中国法律法规&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 查询本机外网IPv4地址&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl 4.ipw.cn
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 查询本机外网IPv6地址&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl 6.ipw.cn
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 测试网络是IPv4还是IPv6访问优先(访问IPv4/IPv6双栈站点，如果返回IPv6地址，则IPv6访问优先)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl test.ipw.cn
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Debian12 SambaCIFS安装与配置</title>
+      <link>http://localhost:1313/post/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Fri, 22 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      
+        <description>&lt;h1 id=&#34;1背景&#34;&gt;1.背景&lt;/h1&gt;
+&lt;p&gt;主机pudding上部署了多个服务，现需要pudding向局域网内提供文件共享服务，服务对象包括不限于windows、android、ios、linux、k8s node以及电视盒子等。&lt;/p&gt;
+&lt;h1 id=&#34;2规划&#34;&gt;2.规划&lt;/h1&gt;
+&lt;p&gt;文件共享服务需要满足以下条件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;支持多设备、多平台、易操作。需要向多种OS提供文件共享服务且易于浏览&lt;/li&gt;
+&lt;li&gt;支持多用户的文件权限控制，各个用户之间既能相互共享文件又能对私有文件保持隔离性&lt;/li&gt;
+&lt;li&gt;目前主机pudding已经投入使用，文件共享服务不能对现有服务造成影响&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;现常见的文件共享协议有：&lt;a href=&#34;https://en.wikipedia.org/wiki/Server_Message_Block&#34;&gt;SMB&lt;/a&gt;、&lt;a href=&#34;https://en.wikipedia.org/wiki/Network_File_System&#34;&gt;NFS&lt;/a&gt;、&lt;a href=&#34;https://en.wikipedia.org/wiki/File_Transfer_Protocol&#34;&gt;FTP&lt;/a&gt;、&lt;a href=&#34;https://en.wikipedia.org/wiki/Amazon_S3&#34;&gt;对象存储&lt;/a&gt;、&lt;a href=&#34;https://en.wikipedia.org/wiki/ISCSI&#34;&gt;iSCSI&lt;/a&gt;、FC SAN，关于这几种协议的对比可以参考这篇&lt;a href=&#34;https://zhuanlan.zhihu.com/p/411161467&#34;&gt;《&lt;strong&gt;NFS、FTP、SMB、WebDav、DLNA协议，傻傻分不清？》&lt;/strong&gt;&lt;/a&gt;，其中iSCSI需要对磁盘重新分区，FC SAN需要光纤网络的支持，现实条件不满足，对比下来SMB在设备兼容性以及权限控制方面有着其他协议不可替代的优势，在技术选型方面使用SMB作为局域网内文件共享协议。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>合并B站下载视频与音频脚本</title>
+      <link>http://localhost:1313/post/%E5%90%88%E5%B9%B6b%E7%AB%99%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91%E4%B8%8E%E9%9F%B3%E9%A2%91%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Wed, 13 Dec 2023 23:08:50 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E5%90%88%E5%B9%B6b%E7%AB%99%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91%E4%B8%8E%E9%9F%B3%E9%A2%91%E8%84%9A%E6%9C%AC/</guid>
+      
+        <description>&lt;p&gt;脚本如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$fileList&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-File&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$filenames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;foreach&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$filename&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$fileList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$filename&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-match&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;\.mp4$&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;ffmpeg&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-i&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;${filename}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.mp4&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-i&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;${filename}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.m4a&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-c:v&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;copy &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-c:a&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;aac&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;${filename}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.b.mp4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这段 PowerShell 脚本执行了以下操作：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>screen常用命令</title>
+      <link>http://localhost:1313/post/screen%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/screen%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      
+        <description>&lt;p&gt;记录screen常用命令&lt;/p&gt;
+&lt;p&gt;新建/恢复 screen：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;screen -R name
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看当前存在screen：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;screen -ls
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将当前screen置于后台：ctrl+a，然后再按d&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Debian关闭交换内存</title>
+      <link>http://localhost:1313/post/debian%E5%85%B3%E9%97%AD%E4%BA%A4%E6%8D%A2%E5%86%85%E5%AD%98/</link>
+      <pubDate>Wed, 18 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/debian%E5%85%B3%E9%97%AD%E4%BA%A4%E6%8D%A2%E5%86%85%E5%AD%98/</guid>
+      
+        <description>&lt;p&gt;临时关闭：&lt;code&gt;sudo swapoff -a &lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;永久关闭：&lt;code&gt;sudo sed -i &#39;/ swap / s/^\(.*\)$/#\1/g&#39; /etc/fstab&lt;/code&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>如何保护代码中的敏感信息</title>
+      <link>http://localhost:1313/post/%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8A%A4%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF/</link>
+      <pubDate>Thu, 24 Aug 2023 00:27:56 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8A%A4%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF/</guid>
+      
+        <description>&lt;p&gt;一般情况下项目会分为开发环境、测试环境、生产环境等，不同的环境有不同的数据库连接（或redis、银行账户等，此处以数据库为例），其中将生产环境的账号密码以明文的形式写入到配置文件中是极其不安全的做法。&lt;/p&gt;
+&lt;p&gt;如何保护代码中的敏感信息呢？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;加密。将明文的数据通过加密的方式写入配置文件中可以初步的保护我们的账号密码不被泄露。&lt;/li&gt;
+&lt;li&gt;数据本地化。将数据库的账号密码写入到环境变量或者启动参数，亦或者诸如在web容器中添加JNDI数据库连接，都可以起到很好的保护作用。&lt;/li&gt;
+&lt;li&gt;添加配置中心。项目启动后向本环境的配置中心请求配置参数，配置中心可以根据请求者的ip或其他方式对请求者鉴权。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当然保护数据库还可以采用内网访问的方式，但对敏感信息的保护不具通用性。上面三种方式也各有利弊，比如配置中心采用token访问，则token的保护又成为新的问题，可以结合方式二，将token放入环境变量中，相对与单纯的数据本地化，配置中心可以动态的修改配置而不必重启应用，弊端则是配置中心一但挂了则全盘崩溃，具体使用哪种方式需结合相关的业务场景使用。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>记一次Spring事务失效场景，理解Spring Bean的AOP代理</title>
+      <link>http://localhost:1313/post/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Thu, 24 Aug 2023 00:24:41 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86/</guid>
+      
+        <description>&lt;p&gt;在Spring中，我们经常使用&lt;code&gt;@Transactional&lt;/code&gt;注解开启事务，在这个注解中有个propagation属性用来控制事务的传播，此次失效场景中使用&lt;code&gt;Propagation.NEVER&lt;/code&gt;，Spring中是这样描述的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Execute non-transactionally, throw an exception if a transaction exists. Analogous to EJB transaction attribute of the same name.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence</title>
+      <link>http://localhost:1313/post/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence/</link>
+      <pubDate>Thu, 24 Aug 2023 00:22:55 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence/</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route&amp;#43;between&amp;#43;ZeroTier&amp;#43;and&amp;#43;Physical&amp;#43;Networks&#34;&gt;zerotier.atlassian.net&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This seems to be the simplest pattern for getting remote access to your LAN. It doesn&amp;rsquo;t require acces&amp;hellip;&amp;hellip;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Java多线程下系统时区全局锁对性能的影响</title>
+      <link>http://localhost:1313/post/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/</link>
+      <pubDate>Thu, 24 Aug 2023 00:18:52 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/</guid>
+      
+        <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;在考量MySql时间格式时，看到有文章提到高并发下&lt;code&gt;timestamp&lt;/code&gt;调用系统时区转换格式时会因为全局锁导致线程上下文切换致使cpu使用率暴涨。&lt;/p&gt;
+&lt;h2 id=&#34;测试过程&#34;&gt;测试过程&lt;/h2&gt;
+&lt;p&gt;在查询数据库时，MyBatis或者JPA等框架大都会将&lt;code&gt;timestamp&lt;/code&gt;转换为Java中对应的时间戳格式（Timestamp或者Instant），在这一过程中并不存在时区转换的问题，而在业务代码尤其是返回前端数据时，经常需要将时间戳转换为具体的时间字符串，此时才是应该探究的全局锁对性能影响的关键点。&lt;/p&gt;
+&lt;p&gt;设计两个对照组：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;是否使用系统时区对性能的影响&lt;/li&gt;
+&lt;li&gt;不同并发量下对性能影响&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;使用系统时区的Callable：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Callable&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Long&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;useSystemZoneCallable&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;startTime&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;currentTimeMillis&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MAX_EX_NUM&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ZoneId&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;systemDefault&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;toString&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;currentTimeMillis&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;startTime&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不使用系统时区的Callable:&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>HTTP知识点梳理</title>
+      <link>http://localhost:1313/post/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86/</link>
+      <pubDate>Thu, 24 Aug 2023 00:17:09 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86/</guid>
+      
+        <description>&lt;h2 id=&#34;什么是http&#34;&gt;什么是HTTP&lt;/h2&gt;
+&lt;p&gt;HTTP全称Hypertext Transfer Protocol,意为超文本传输协议，是一个应用层用于出书超媒体文档（如HTML)的协议。它是专为浏览器和Web服务器之间的通信而设计的，但它也可用于其他目的。HTTP遵循典型的BS模型，客户端打开连接发出请求，等待收到相应。HTTP是一个无状态协议，表示服务器不会在两个请求之间保留任何数据（状态）。&lt;/p&gt;
+&lt;h2 id=&#34;http消息的组成&#34;&gt;HTTP消息的组成&lt;/h2&gt;
+&lt;h3 id=&#34;请求&#34;&gt;请求&lt;/h3&gt;
+&lt;p&gt;URL(统一资源定位器)&lt;/p&gt;
+&lt;p&gt;请求方法:GET、POST、PUT、PATCH、DELETE、OPTIONS、HEAD&amp;hellip;.&lt;/p&gt;
+&lt;p&gt;请求头：Accept、Accept-Encoding、Connection、Authorization、User-Agent、Cookie、Content-Type（application/json、multipart/form-data、application/x-www-from-urlencoded、application/octet-stream&amp;hellip;.）、Content-Length、Refer、Host&amp;hellip;.&lt;/p&gt;
+&lt;p&gt;请求体（GET通常没有）&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Java Spring Service层业务状态的处理</title>
+      <link>http://localhost:1313/post/java-spring-service%E5%B1%82%E4%B8%9A%E5%8A%A1%E7%8A%B6%E6%80%81%E7%9A%84%E5%A4%84%E7%90%86/</link>
+      <pubDate>Thu, 24 Aug 2023 00:10:48 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/java-spring-service%E5%B1%82%E4%B8%9A%E5%8A%A1%E7%8A%B6%E6%80%81%E7%9A%84%E5%A4%84%E7%90%86/</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;**soluction 1:**return status&lt;/p&gt;
+&lt;p&gt;**soluction 2:**throw exception&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;考虑点如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;抛出异常能够结合事务实现回滚。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;两者的性能，采用抛异常的方式一般而言要损耗更多的性能。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;返回状态的方式，势必封装一个Result类，里面包含status以及需要返回的数据模型，则service所有的接口的返回类型都为Result，这是很糟糕的设计。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>JAVA发展史</title>
+      <link>http://localhost:1313/post/java%E5%8F%91%E5%B1%95%E5%8F%B2/</link>
+      <pubDate>Thu, 24 Aug 2023 00:02:20 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/java%E5%8F%91%E5%B1%95%E5%8F%B2/</guid>
+      
+        <description>&lt;p&gt;  Java已经走过了二十多年的发展史了，作为一门长期霸占排行榜前三甲的编程语言，它被创造出来之时似乎并没有想到会有今天的辉煌，但回顾历史，Java的出现与兴起并非偶然，只是比别人早走了一步。(.net&amp;mdash;&amp;mdash;&amp;mdash;-&amp;gt;(╯°Д°）╯︵ ┻━━━┻）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/upload/11101967-cbb2666740b47397.png&#34; alt=&#34;11101967-cbb2666740b47397.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;  1991年4月，James Gosling（JAVA之父，就是上面那个小老头）博士带着一帮小弟开始了绿色计划，这个计划最初目标是为了开发一种能在各种电子产品上跑的程序架构。嗯…这个就是Java前身:Oak。不过似乎并不怎么吃香。&lt;/p&gt;
+&lt;p&gt;  95年互联网兴起（互联网:Java老小弟，快上车啊🚐），Oak更名Java，在SunWorld大会上正式发布Java1.0（鼓掌，啪啪啪~🌹），并提出了“Write Once，Run Anywhere”。(Java：~~想偷懒么，啊呸，~~加入我吧，带给你足够的便利）&lt;/p&gt;
+&lt;p&gt;  后面就开始数年份了😁。&lt;/p&gt;
+&lt;p&gt;  96年1月，发布了第一个Java虚拟机Sun Classic VM。（&lt;strong&gt;敲钟点&lt;/strong&gt;，面试官问你VM有哪些时，别只回答Hot Spot了，还可以带个IBM J9，再说个Classic VM，虚拟机之祖，汉语意思经典VM，岂不有逼格）&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>剑来摘录</title>
+      <link>http://localhost:1313/post/%E5%89%91%E6%9D%A5%E6%91%98%E5%BD%95/</link>
+      <pubDate>Thu, 24 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E5%89%91%E6%9D%A5%E6%91%98%E5%BD%95/</guid>
+      
+        <description>&lt;ol&gt;
+&lt;li&gt;某些人和事，哪怕是路边的风景，可是只要看一眼，依然会让人觉得很美好。&lt;/li&gt;
+&lt;li&gt;不要把陌生人的些许善意，视为珍稀的瑰宝；却把身边亲近人的全部付出，当做天经地义的事情，对其视而不见。&lt;/li&gt;
+&lt;li&gt;有些人心如花木，皆向阳而生。&lt;/li&gt;
+&lt;li&gt;言念君子，温其如玉。&lt;/li&gt;
+&lt;li&gt;遇事不决，可问春风。&lt;/li&gt;
+&lt;li&gt;是你的就好好抓住，不是你的就不要多想。天底下没谁是欠你的，但是你欠了别人，就别不当回事。&lt;/li&gt;
+&lt;li&gt;认定一件事，即使拿十分力气都无法完成，也要拿出十二分力气去努力。&lt;/li&gt;
+&lt;li&gt;有心为善虽善不赏，无心为恶虽恶不罚。人力有穷尽之时，尽力又尽心了，就不用太愧疚。&lt;/li&gt;
+&lt;li&gt;总有些人，一眼看到就会心生好感，道理都讲不通。&lt;/li&gt;
+&lt;li&gt;有聚终有散，人生就是一场场折柳。岁月长河里，仿佛存在着一座座杨柳依依的渡口，每一段光阴逆旅当中，会有人离船而去，有人登船作伴，然后在下一座渡口又有新的聚散离别。&lt;/li&gt;
+&lt;li&gt;真正的强者，愿意以弱者的自由为边界。&lt;/li&gt;
+&lt;li&gt;混吃等死，小富即安，飞黄腾达，是因为各有各的缘法，未必有高下之分。&lt;/li&gt;
+&lt;li&gt;该是你的，就拿好别丢。不该是你的，想都别想。&lt;/li&gt;
+&lt;li&gt;修心，亦是修行之一。顺境修力，逆境修心，缺一不可。&lt;/li&gt;
+&lt;li&gt;君子坐而论道，少年起而行之。&lt;/li&gt;
+&lt;li&gt;是非功过有人心，善恶斤两问阎王。为何有此说？因为每个人的道德修养、成长经历、眼界阅历都会不同，人心起伏不定，有几人敢自称自己的良心，最为中正平和？有些违心的事情，一步都不要走出去。&lt;/li&gt;
+&lt;li&gt;看似与人为善、心肠柔软之人，必然有一块坚硬如铁的心境土壤，在苦难人生中，死死支撑着那份看似愚蠢的善意。&lt;/li&gt;
+&lt;li&gt;有些事情，死了也要做。但有些事情，是死也不能做的。&lt;/li&gt;
+&lt;li&gt;我想变成一棵树，开心时，在秋天开花；伤心时，在春天落叶。&lt;/li&gt;
+&lt;li&gt;对的就是对的，错的就是错的，好的就应该珍惜，怎么珍惜都不为过。&lt;/li&gt;
+&lt;li&gt;粗粮可以养胃，书籍可以养气，景致可以养心。&lt;/li&gt;
+&lt;li&gt;当我们对这个世界给予善意后，如果非但没有得到善意的回报，甚至只有恶意，这个时候，能够不失望，才是真正的希望。&lt;/li&gt;
+&lt;li&gt;有些善意，就跟春寒料峭的阳光一样，虽说在与不在，差别不是很大，可为什么要拒绝呢？&lt;/li&gt;
+&lt;li&gt;不被喜欢的姑娘喜欢，是一件很伤心的事情，可天没有塌下来，该怎么活，还得怎么活。&lt;/li&gt;
+&lt;li&gt;杀人放火金腰带，修路铺桥无骸骨。&lt;/li&gt;
+&lt;li&gt;命里八分，莫求一丈。&lt;/li&gt;
+&lt;li&gt;真正的强者不在于什么无敌，而在于活着，输得再惨都别死了，而是每次都能够站起来，再次愤然出拳出剑！&lt;/li&gt;
+&lt;li&gt;知而不行，谓之不诚。行而不成，谓之不能。知而行，是赤诚之心，行而能，是贯彻到底，已经很难被其他人和事影响了。而知行合一的前提是，格物致知，将一件事研究到极致，变成自己的知识。比如做菜，将做菜这门手艺做到尽善尽美，色香味无可挑剔；比如建筑，将楼宇亭台建得坚固美观使用，美轮美奂，风雨不倒地震不塌；比如造船，将造船原理吃透，用料坚固，风浪不沉。这便是格物致知，将一件东西一件事情研究到极点，明白其中所有的道理。做到格物致知，方能知行合一。&lt;/li&gt;
+&lt;li&gt;当这个世界给予自己善意的时候，一定要好好珍惜，要惜福，无论大小。&lt;/li&gt;
+&lt;li&gt;凡夫俗子不下苦功夫、死力气去努力做成一件事，根本就没资格去谈什么天赋不天赋。&lt;/li&gt;
+&lt;li&gt;有些人，只是夹杂在稻谷之中的一株稗草，被人看过一眼，就再无第二眼。&lt;/li&gt;
+&lt;li&gt;与善人居，如入芝兰之室，久而自芳矣。&lt;/li&gt;
+&lt;li&gt;老天爷不给公道，没事，我自己去要，能要多少是多少。&lt;/li&gt;
+&lt;li&gt;人生在世，很多人做很多事，吃苦就是吃苦，只是吃苦而已。一分耕耘一分收获？得看喜欢打盹的老天爷答应不答应。&lt;/li&gt;
+&lt;li&gt;吃得苦中苦方为人上人，我辈武人，想要往上走，在登顶之前，就要去当一条路边刨食求活的野狗！要告诉自己，要想痛痛快快活着，就必须跟天地大道争！跟狗屁神仙争！跟同辈武夫争！最后还要跟自己争！争那一口气！&lt;/li&gt;
+&lt;li&gt;世间父亲皆英雄。&lt;/li&gt;
+&lt;li&gt;文字在有些时候，恰恰会是我们认识这个世界的无形障碍。所以你以后读书的时候，不要时时刻刻都去咬文嚼字，若是遇到了瓶颈，不妨先退一步，再登高数步，尽量往高处走一走，不登山峰，不显平地。&lt;/li&gt;
+&lt;li&gt;开玩笑没关系，但是切记言多必失。世间一个个文字，是有力量的。字眼组合成词，词汇串联成句，语句契合成文章。大道就在其中。&lt;/li&gt;
+&lt;li&gt;有些人总是这么不一样，看了一眼，就能让人记住很多年。而有些人，哪怕看了再多年，也没在心头住下。&lt;/li&gt;
+&lt;li&gt;不妨试试看，反正事情已经不能再糟糕了。而有些事，不是你想躲就躲得掉的。人生在世，遇到一个坎不怕，努力走过去就是了，过不过得去，两说，你好歹尝试过。&lt;/li&gt;
+&lt;li&gt;人情送头牛，买卖不饶针。&lt;/li&gt;
+&lt;li&gt;有些人之间，注定只要相逢，就是对的。如果还能重逢，就是最好的。&lt;/li&gt;
+&lt;li&gt;一些美好事情，如果是在别人身上流露出来的，羡慕过后，那就去学，至于学不学得来，努力之后再说。多简单的事情。&lt;/li&gt;
+&lt;li&gt;自童年起，我就独自一人，照看历代星辰。&lt;/li&gt;
+&lt;li&gt;朋友之间提谢字，多伤感情，这就跟男女之间谈一个钱字，是一样的。&lt;/li&gt;
+&lt;li&gt;人在伤心的时候，千万不要喝酒，容易变烂酒鬼。快意的事情，可以喝酒，说不定喝着喝着，就成了酒仙。&lt;/li&gt;
+&lt;li&gt;该省之省，一文铜钱，即是家族根本。该花则花，一掷千金，根本无需眨眼。&lt;/li&gt;
+&lt;li&gt;百事忙千事忧，到头来万事休，天凉好个秋呀好个秋！&lt;/li&gt;
+&lt;li&gt;有些可惜，是没办法十全十美。有些可惜，是某些长久的遗憾。&lt;/li&gt;
+&lt;li&gt;人都会长大的，长大了之后，就会捡起一些新东西，丢掉一些旧东西，就这么丢丢捡捡，哗啦一下子，就老喽。&lt;/li&gt;
+&lt;li&gt;有些委屈，无论大小，只有受过同样委屈的人，才可以真正体会。否则旁人再好的善心善意，恐怕都无法让人真正心安。&lt;/li&gt;
+&lt;li&gt;如果你的朋友过得比你好，好很多，好到让你望尘莫及，一辈子追不上，那么你心里头会不会一点点别扭？&lt;/li&gt;
+&lt;li&gt;怎么挣钱是一回事，锱铢必较，哪怕一颗铜钱都需要跟人算清楚，可是有了钱怎么花，就看各自习惯了。像我，一年到头确实在拼命赚钱，图什么？就是为了自己能够不用在交朋友这种事上，太小气，还要计较一个钱字。&lt;/li&gt;
+&lt;li&gt;有些事情，不去做，心里不痛快。可有些事情，再不痛快，也只能忍着。&lt;/li&gt;
+&lt;li&gt;女子总爱在情爱一事上动脑筋，男子喜好在江山一事上花心思。&lt;/li&gt;
+&lt;li&gt;我们活在一个很复杂的世道里，很多人的言行，哪怕是学问极高的读书人，还是会自相矛盾，我们看多了没甚道理的事情，难免会问，是不是书上的道理，是错的，或者说，是那些道理还没有说透，没有说全。&lt;/li&gt;
+&lt;li&gt;我们该怎么看待这个许多嘴上讲道理、做事没道理的世界？办法是有的，一种是活得纯粹，我拳头很硬，剑术很强，道法很强，就用这些来打破一些东西。复杂问题给简单解决掉，只要我开心就好。天地有规矩约束我，我便一拳打破，世间有大道压我，我有一剑破万法。哪怕暂时做到如此酣畅淋漓，可总是如此想，坚定不移，一直朝这个方向走在道路上。这种人可以有，但是不能人人如此的。另一种是活得很聪明，怎么省心省力怎么来，规矩二字，就是用来钻漏洞的。&lt;/li&gt;
+&lt;li&gt;人间万事细如毛，我有小事大如斗。&lt;/li&gt;
+&lt;li&gt;归根结底，长得好，无论男女，怎么都是对的，长得不好看，大概就是万般皆罪。&lt;/li&gt;
+&lt;li&gt;人情世情，最难讲理。因为一旦真要掰碎了讲道理，好像酒水分了家，没滋没味。所以说世间的祖荫福缘，哪怕送到了子孙手上，还是各人有各命，有些人抓得住，有些人抓不住，有人抓得多有人抓得少，而且这种事情，往往当事人在当下只会浑然不知，只能凭本心而为。&lt;/li&gt;
+&lt;li&gt;对世界不要失去希望，除了一定要好好活着之外，其实还有一层意思，就是当我们对这个世界给予善意后，如果非但没有得到善意的回报，甚至只有恶意，这个时候，能够不失望，才是真正的希望。&lt;/li&gt;
+&lt;li&gt;因为他从来懒得跟人讲道理。打不过人家，讲道理不管用；打得过人家，讲道理好像没必要。&lt;/li&gt;
+&lt;li&gt;男子下等眼光，只看女子脸面，中等眼光，看那身段，上等眼光，看女子神意。&lt;/li&gt;
+&lt;li&gt;一个随便把别人当朋友的人,往往不会有真正的朋友。一个喜欢嘴上称兄道弟的人,心里其实没有真正的兄弟。&lt;/li&gt;
+&lt;li&gt;一个人，哪能什么都不麻烦别人，偶尔有个一两次，不用太愧疚。&lt;/li&gt;
+&lt;li&gt;有些离别，就不希望再碰面，但往往在不经意间就不期而遇了。有些明明希望可以再见的分别，却偏偏不会有再会了。&lt;/li&gt;
+&lt;li&gt;这个世界，一直亏欠着好人。对对错错，怎么会没有呢？只是我们不远去深究罢了。嘴上可以不谈，甚至故意颠倒黑白，可心里要有数啊。只可惜世事多无奈，聪明人越来越多，心眼心窍多如莲蓬者，往往喜欢讥讽醇厚，否认纯粹的善意，厌恶他人的赤诚。&lt;/li&gt;
+&lt;li&gt;你如何看待这个世界，世界就会如何看你。&lt;/li&gt;
+&lt;li&gt;苦难一事，世间何其多，有何奇怪？任何一个身世坎坷的孩子，谁缺这个？可奇怪之处，在于吃苦二字，怎么一个吃法。人间苦难，不消说也，说不得也。&lt;/li&gt;
+&lt;li&gt;人吃土一辈子，土吃人一回。&lt;/li&gt;
+&lt;li&gt;读过多少书，就敢说这个世道‘就是这样的’，见过多少人，就敢说男人女人‘都是这般德行’？你亲眼见过多少太平和苦难，就敢断言他人的善恶？&lt;/li&gt;
+&lt;li&gt;做生意，熟人登门，绝不可以杀熟，但是也不可以不收钱，不赚不亏，是最好的。否则越做生意，就越没朋友。你次次亏本，那人还喜欢时时登门，证明对方不把你当朋友。你次次赚得比平时还多，那就更明白了，你根本不曾将那人当做朋友，若是这般，反而爽利。若是前者，就要揪心了。&lt;/li&gt;
+&lt;li&gt;有些修士，要么清心寡欲，不问世事，要么恪守规矩，愿意为了人间的太平，让自己活得没那么痛快，不去追求绝对的自由。世间百态，各有所求，是非对错，一团浆糊。因为有太多人，道理只是说给别人听的，而不是用来约束自己的本心。山上山下皆如此。&lt;/li&gt;
+&lt;li&gt;喝了酒，就敢想不敢想的，敢说不敢说的，敢做不敢做的。&lt;/li&gt;
+&lt;li&gt;万事莫走极端。与人讲道理，最怕“我要道理全占尽”。最怕一旦与人交恶，便全然不见其善。庙堂之上，党争，甚至是被后世视为君子之争的党争，为何还是遗祸极长，就在于君子贤人，在这些事情上，同样做得不对。&lt;/li&gt;
+&lt;/ol&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>美国的衰落已经无可挽回了吗？</title>
+      <link>http://localhost:1313/post/%E7%BE%8E%E5%9B%BD%E7%9A%84%E8%A1%B0%E8%90%BD%E5%B7%B2%E7%BB%8F%E6%97%A0%E5%8F%AF%E6%8C%BD%E5%9B%9E%E4%BA%86%E5%90%97/</link>
+      <pubDate>Thu, 24 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/%E7%BE%8E%E5%9B%BD%E7%9A%84%E8%A1%B0%E8%90%BD%E5%B7%B2%E7%BB%8F%E6%97%A0%E5%8F%AF%E6%8C%BD%E5%9B%9E%E4%BA%86%E5%90%97/</guid>
+      
+        <description>&lt;p&gt;作者：王五&lt;/p&gt;
+&lt;p&gt;来源：&lt;a href=&#34;https://www.zhihu.com/question/438488725/answer/1677278371&#34;&gt;知乎&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。&lt;/p&gt;
+&lt;p&gt;我国网络上过分高估了新冠疫情对美国造成的负面影响，现在的美国根本没有出现加速衰败的迹象。&lt;/p&gt;
+&lt;p&gt;唉，打完这句话，我仿佛已经看到私信里又多了几条骂我的留言。&lt;/p&gt;
+&lt;p&gt;实际上，新冠病毒破坏力最强的点在于干扰社交活动，传播能力太强造成工厂、超市等人员流动频繁的场所必定要受到冲击，商业活动的萎缩会导致政府财政压力越来越大。&lt;/p&gt;
+&lt;p&gt;但这对美国是无效的。&lt;/p&gt;
+&lt;p&gt;美国的工业早就已经空心化了，他们消费的工业产品大半来自中国，所以哪怕一年时间内美国工厂活动完全处于停止状态他们也不会真正崩溃，生产不是问题，问题是钱。&lt;/p&gt;
+&lt;p&gt;可是由于美元依然是国际货币，连钱也不再是个问题了，别人的钱都是赚的，只有美国的钱是印的。&lt;/p&gt;
+&lt;p&gt;于是我国网友就在这里陷入了逻辑矛盾：按照常理来说，一个国家不断超发货币，只会造成货币贬值和通货膨胀，美国这么干不是自寻死路？&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

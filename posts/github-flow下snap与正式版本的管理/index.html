@@ -1,0 +1,553 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" /><title>
+    
+      
+        GitFlow下Snap与正式版本的管理 |
+      limxwu
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.css" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86/" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/site-feature-image.png">
+  <meta name="twitter:title" content="GitFlow下Snap与正式版本的管理">
+  <meta name="twitter:description" content="基于GitHub的GitFlow如何管理java的snapshot与正式版本，这是一个非常经典且重要的问题。将 GitHub Flow 的敏捷性与 Java 项目的 Snapshot/Release 版本管理相结合，可以构建一个高效且可靠的发布流程。
+下面我将详细阐述基于 GitHub Flow 的最佳实践，包括分支策略、版本命名约定、自动化流程以及具体操作步骤。">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86/">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="GitFlow下Snap与正式版本的管理">
+  <meta property="og:description" content="基于GitHub的GitFlow如何管理java的snapshot与正式版本，这是一个非常经典且重要的问题。将 GitHub Flow 的敏捷性与 Java 项目的 Snapshot/Release 版本管理相结合，可以构建一个高效且可靠的发布流程。
+下面我将详细阐述基于 GitHub Flow 的最佳实践，包括分支策略、版本命名约定、自动化流程以及具体操作步骤。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-12T12:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-12T12:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/images/site-feature-image.png">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "GitFlow下Snap与正式版本的管理",
+        "headline": "GitFlow下Snap与正式版本的管理",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003cp\u003e基于GitHub的GitFlow如何管理java的snapshot与正式版本，这是一个非常经典且重要的问题。将 GitHub Flow 的敏捷性与 Java 项目的 Snapshot\/Release 版本管理相结合，可以构建一个高效且可靠的发布流程。\u003c\/p\u003e\n\u003cp\u003e下面我将详细阐述基于 GitHub Flow 的最佳实践，包括分支策略、版本命名约定、自动化流程以及具体操作步骤。\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2025-09-12T12:00:00.00Z",
+        "datePublished": "2025-09-12T12:00:00.00Z",
+        "dateModified": "2025-09-12T12:00:00.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicons\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+        
+        "http://localhost:1313/images/site-feature-image.png"
+
+
+      
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86\/",
+        "wordCount" : "372",
+        "genre" : [ ],
+        "keywords" : [ ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar wrapper__sidebar--hidden"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/limxwu"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="mailto:limxuw@outlook.com"
+            target="_blank"
+            rel="noopener me"
+            aria-label="e-mail"
+            title="e-mail"
+          >
+            <i class="fa-solid fa-envelope fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main wrapper__main--fullscreen"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>GitFlow下Snap与正式版本的管理</h1>
+      
+      <p>基于GitHub的GitFlow如何管理java的snapshot与正式版本，这是一个非常经典且重要的问题。将 GitHub Flow 的敏捷性与 Java 项目的 Snapshot/Release 版本管理相结合，可以构建一个高效且可靠的发布流程。</p>
+<p>下面我将详细阐述基于 GitHub Flow 的最佳实践，包括分支策略、版本命名约定、自动化流程以及具体操作步骤。</p>
+<h3 id="核心原则">核心原则</h3>
+<ol>
+<li>
+<p><strong>GitHub Flow 基础</strong>：</p>
+<ul>
+<li>主分支（<code>main</code> 或 <code>master</code>）始终反映生产就绪状态。</li>
+<li>新功能在功能分支（<code>feature/*</code>）上开发，通过 Pull Request (PR) 合并回主分支。</li>
+<li>合并到主分支后应立即部署（或具备部署能力）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Maven 版本约定</strong>：</p>
+<ul>
+<li><strong>Snapshot 版本（快照版本）</strong>：<code>-SNAPSHOT</code> 后缀（例如 <code>1.2.3-SNAPSHOT</code>）。用于开发中的、不稳定的版本。同一快照版本可以多次部署到仓库，Maven 会在构建时尝试获取最新的快照。</li>
+<li><strong>Release 版本（正式版本）</strong>： 没有后缀的版本（例如 <code>1.2.3</code>）。用于稳定的、生产可用的版本。一旦发布，该版本的工件在仓库中是不可变的。</li>
+</ul>
+</li>
+</ol>
+<h3 id="分支策略与版本管理方案">分支策略与版本管理方案</h3>
+<p>这个方案的核心是：<strong>功能分支和主分支使用 Snapshot 版本，创建发布分支时移除 Snapshot 后缀以生成 Release 版本。</strong></p>
+<h4 id="1-日常开发阶段-snapshot-流程">1. 日常开发阶段 (Snapshot 流程)</h4>
+<ul>
+<li><strong>分支</strong>： 所有开发都在功能分支（如 <code>feature/add-payment</code>）上进行。</li>
+<li><strong>版本号</strong>： 主分支（<code>main</code>）的 <code>pom.xml</code> 中的版本始终是 <strong>下一个预期版本的 Snapshot</strong>。
+<ul>
+<li>例如，你刚刚发布了 <code>1.2.3</code>，那么主分支的版本应立即升级为 <code>1.3.0-SNAPSHOT</code>（遵循语义化版本控制）。</li>
+</ul>
+</li>
+<li><strong>流程</strong>：
+<ol>
+<li>开发者从 <code>main</code> 分支切出功能分支。</li>
+<li>在功能分支上开发、提交代码。<strong>功能分支的版本号与 <code>main</code> 分支保持一致</strong>（即 <code>1.3.0-SNAPSHOT</code>），无需修改。</li>
+<li>完成功能后，创建 PR 请求合并到 <code>main</code>。</li>
+<li>CI/CD 工具（如 GitHub Actions）会检测到 PR 或合并事件，自动构建并运行测试。</li>
+<li><strong>合并到 <code>main</code> 后</strong>，CI/CD 应自动执行 <code>mvn deploy</code>，将最新的 <code>1.3.0-SNAPSHOT</code> 工件发布到 Maven Snapshot 仓库（如 GitHub Packages 或 Nexus Snapshot Repo）。其他依赖此项目的 Snapshot 版本的项目可以获取到这次最新的构建。</li>
+</ol>
+</li>
+</ul>
+<h4 id="2-发布阶段-release-流程">2. 发布阶段 (Release 流程)</h4>
+<p>当 <code>main</code> 分支的功能积累到一定程度，准备发布一个正式版本时。</p>
+<ul>
+<li><strong>分支</strong>： 从 <code>main</code> 分支创建一个<strong>发布分支</strong>（<code>release/v1.3.0</code>）。</li>
+<li><strong>版本号</strong>： <strong>在发布分支上移除 <code>-SNAPSHOT</code> 后缀</strong>。
+<ul>
+<li><code>main</code> 分支： <code>1.3.0-SNAPSHOT</code> -&gt; (保持不变)</li>
+<li><code>release/v1.3.0</code> 分支： <code>1.3.0-SNAPSHOT</code> -&gt; <code>1.3.0</code></li>
+</ul>
+</li>
+<li><strong>流程</strong>：
+<ol>
+<li>从 <code>main</code> 分支切出 <code>release/v1.3.0</code> 分支。</li>
+<li>在 <code>release/v1.3.0</code> 分支上执行：<code>mvn versions:set -DnewVersion=1.3.0</code>。这会移除 <code>-SNAPSHOT</code> 后缀。</li>
+<li>提交这次版本变更（例如提交信息为 <code>&quot;Release version 1.3.0&quot;</code>）。</li>
+<li><strong>为这个提交打上 Git Tag</strong>： <code>git tag -a v1.3.0 -m &quot;Release version 1.3.0&quot;</code>。Tag 名与版本号对应，方便追溯。</li>
+<li>将发布分支和 Tag 推送到远程仓库：<code>git push origin release/v1.3.0 &amp;&amp; git push origin v1.3.0</code>。</li>
+<li>CI/CD 工具检测到 <code>release/**</code> 分支的推送或 Tag 的创建，自动触发发布流程：<code>mvn clean deploy</code>。这次部署会将 <strong>正式版本 <code>1.3.0</code></strong> 的工件发布到 Maven Release 仓库。</li>
+<li>（可选）在发布分支上进行最终的验收测试（UAT）。如果发现任何小问题，直接在 <code>release/v1.3.0</code> 分支上修复，并递增版本号（如 <code>1.3.1</code>），然后重新触发部署。</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-发布后阶段">3. 发布后阶段</h4>
+<ul>
+<li><strong>合并回主分支</strong>： 发布完成后，<strong>必须将发布分支上的版本变更提交（以及任何修复提交）合并回 <code>main</code> 分支</strong>。
+<ul>
+<li>这通常通过一个 PR 来完成，将 <code>release/v1.3.0</code> 合并回 <code>main</code>。</li>
+<li>由于 <code>main</code> 分支还是 <code>1.3.0-SNAPSHOT</code>，而发布分支是 <code>1.3.0</code>，这会产生一个冲突。<strong>解决冲突时，保留 <code>main</code> 分支的 <code>-SNAPSHOT</code> 后缀</strong>。</li>
+</ul>
+</li>
+<li><strong>升级主分支版本</strong>： 合并完成后，<code>main</code> 分支现在包含了所有发布的内容。此时，<strong>立即将 <code>main</code> 分支的版本升级为下一个开发周期的 Snapshot 版本</strong>。
+<ul>
+<li>执行 <code>mvn versions:set -DnewVersion=1.4.0-SNAPSHOT</code>。</li>
+<li>提交并推送 <code>main</code> 分支。</li>
+</ul>
+</li>
+<li><strong>归档发布分支</strong>： 发布分支可以保留，也可以在一段时间后删除，因为 Tag 已经标记了发布的确切时点。</li>
+</ul>
+<h3 id="自动化cicd的关键作用">自动化（CI/CD）的关键作用</h3>
+<p>整个流程高度依赖自动化，通常使用 <strong>GitHub Actions</strong> 来实现。</p>
+<ol>
+<li>
+<p><strong>CI 流水线（针对 PR 和 <code>main</code> 分支）</strong>：</p>
+<ul>
+<li>触发器：<code>push</code> 到 <code>main</code>, <code>push</code> 到 <code>feature/*</code>，或 <code>pull_request</code> 事件。</li>
+<li>任务：编译、运行单元测试、集成测试、代码质量检查。</li>
+<li><strong>仅在合并到 <code>main</code> 后</strong>：执行 <code>mvn deploy</code> 到 Snapshot 仓库。</li>
+</ul>
+</li>
+<li>
+<p><strong>CD 流水线（针对发布分支和 Tag）</strong>：</p>
+<ul>
+<li>触发器：<code>push</code> 到 <code>release/**</code> 分支，或 <code>tag</code> 创建（如 <code>v*</code>）。</li>
+<li>任务：执行完整的 CI 流程。</li>
+<li>执行 <code>mvn deploy</code> 到 <strong>Release 仓库</strong>。确保此流水线有访问 Release 仓库的权限。</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结与最佳实践">总结与最佳实践</h3>
+<p>| <strong>开发</strong> | <code>feature/*</code> | <code>1.3.0-SNAPSHOT</code> | 频繁提交，创建 PR | 不部署 |</p>
+<p>| <strong>集成</strong> | <code>main</code> | <code>1.3.0-SNAPSHOT</code> | 合并 PR，CI 运行测试 | <strong>自动部署到 Snapshot 仓库</strong> |</p>
+<p>| <strong>发布</strong> | <code>release/v1.3.0</code> | <code>1.3.0</code> (去 Snapshot) | 创建分支，改版本，打 Tag <code>v1.3.0</code> | <strong>自动部署到 Release 仓库</strong> |</p>
+<p>| <strong>迭代</strong> | <code>main</code> | <code>1.4.0-SNAPSHOT</code> (升级) | 合并发布分支的修改，并升级版本 | - |</p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li><strong>清晰</strong>： <code>main</code> 分支永远是“下一个版本的 Snapshot”，状态明确。</li>
+<li><strong>自动化</strong>： 最大程度减少人工干预，避免错误。</li>
+<li><strong>可追溯</strong>： Git Tag 与发布的正式版本一一对应。</li>
+<li><strong>符合惯例</strong>： 完全遵循 Maven 和 GitHub Flow 的标准约定。</li>
+</ul>
+<p><strong>工具推荐</strong>：</p>
+<ul>
+<li>
+<p><strong>Maven Versions Plugin</strong>： 用于在命令行中高效地修改 <code>pom.xml</code> 版本。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mvn versions:set -DnewVersion<span class="o">=</span>1.3.0-SNAPSHOT
+</span></span></code></pre></div></li>
+<li>
+<p><strong>GitHub Actions</strong>： 实现整个 CI/CD 流程自动化。</p>
+</li>
+<li>
+<p><strong>Maven Release Plugin</strong>： 虽然功能强大，但其交互式工作流可能与 GitHub Flow 的自动化理念不太契合。上述方案通常更灵活、更现代。</p>
+</li>
+</ul>
+<p>通过遵循这个方案，你的 Java 项目可以实现高效、安全且一致的 Snapshot 和 Release 版本管理。</p>
+
+</div>
+    <div class="post__footer">
+      
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

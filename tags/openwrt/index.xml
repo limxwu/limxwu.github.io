@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openwrt on 布知花树</title>
+    <link>https://www.limxwu.fun/tags/openwrt.html</link>
+    <description>Recent content in Openwrt on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 08 May 2024 08:50:44 +0000</lastBuildDate><atom:link href="https://www.limxwu.fun/tags/openwrt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Openwrt配置BGP</title>
+      <link>https://www.limxwu.fun/posts/openwrt%E9%85%8D%E7%BD%AEbgp.html</link>
+      <pubDate>Wed, 08 May 2024 08:50:44 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/openwrt%E9%85%8D%E7%BD%AEbgp.html</guid>
+      
+        <description>&lt;h2 id=&#34;安装frr&#34;&gt;安装FRR&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence</title>
+      <link>https://www.limxwu.fun/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:22:55 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route&amp;#43;between&amp;#43;ZeroTier&amp;#43;and&amp;#43;Physical&amp;#43;Networks&#34;&gt;zerotier.atlassian.net&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

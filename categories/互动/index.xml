@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>互动 on 布知花树</title>
+    <link>https://www.limxwu.fun/categories/%E4%BA%92%E5%8A%A8.html</link>
+    <description>Recent content in 互动 on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 04 Mar 2024 23:50:02 +0000</lastBuildDate><atom:link href="https://www.limxwu.fun/categories/%E4%BA%92%E5%8A%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mirotalk-视频会议</title>
+      <link>https://www.limxwu.fun/posts/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE.html</link>
+      <pubDate>Mon, 04 Mar 2024 23:50:02 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE.html</guid>
+      
+        <description>&lt;h2 id=&#34;基于webrtc---p2p---简单安全快速的实时视频会议&#34;&gt;基于WebRTC - P2P - 简单、安全、快速的实时视频会议&lt;/h2&gt;
+&lt;iframe src=&#34;https://p2p.mirotalk.com/join/75448RedBrick&#34; width=&#34;100%&#34; height=&#34;800px&#34; frameborder=&#34;0&#34; allowfullscreen=&#34;true&#34; framespacing=&#34;0&#34; style=&#34;display: inline-block&#34; allow=&#34;camera; microphone&#34;&gt;&lt;/iframe&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,617 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" /><title>
+    
+      
+        Debian12 iptables防火墙配置 |
+      limxwu
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.css" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/site-feature-image.png">
+  <meta name="twitter:title" content="Debian12 iptables防火墙配置">
+  <meta name="twitter:description" content="保存规则 通过 iptables-persistent 保存 netfilter-persistent save 通过iptables保存 要稍后保存规则设置，请使用命令
+iptables-save &gt; /etc/iptables/rules.v4 ip6tables-save &gt; /etc/iptables/rules.v6 恢复规则 现行规则的恢复和替换 iptables-restore &lt; /etc/iptables/rules.v4 恢复同时保持当前规则 iptables-restore -n &lt; /etc/iptables/rules.v4 iptables的使用 语法：">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="Debian12 iptables防火墙配置">
+  <meta property="og:description" content="保存规则 通过 iptables-persistent 保存 netfilter-persistent save 通过iptables保存 要稍后保存规则设置，请使用命令
+iptables-save &gt; /etc/iptables/rules.v4 ip6tables-save &gt; /etc/iptables/rules.v6 恢复规则 现行规则的恢复和替换 iptables-restore &lt; /etc/iptables/rules.v4 恢复同时保持当前规则 iptables-restore -n &lt; /etc/iptables/rules.v4 iptables的使用 语法：">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-08T09:48:29+00:00">
+    <meta property="article:modified_time" content="2024-02-08T09:48:29+00:00">
+    <meta property="article:tag" content="网络">
+    <meta property="article:tag" content="Linux">
+    <meta property="og:image" content="http://localhost:1313/images/site-feature-image.png">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Debian12 iptables防火墙配置",
+        "headline": "Debian12 iptables防火墙配置",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch2 id=\u0022保存规则\u0022\u003e保存规则\u003c\/h2\u003e\n\u003ch3 id=\u0022通过-iptables-persistent-保存\u0022\u003e通过 iptables-persistent 保存\u003c\/h3\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 class=\u0022chroma\u0022\u003e\u003ccode class=\u0022language-fallback\u0022 data-lang=\u0022fallback\u0022\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003enetfilter-persistent save\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003ch3 id=\u0022通过iptables保存\u0022\u003e通过iptables保存\u003c\/h3\u003e\n\u003cp\u003e要稍后保存规则设置，请使用命令\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 class=\u0022chroma\u0022\u003e\u003ccode class=\u0022language-fallback\u0022 data-lang=\u0022fallback\u0022\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003eiptables-save \u0026gt; \/etc\/iptables\/rules.v4\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003eip6tables-save \u0026gt; \/etc\/iptables\/rules.v6\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003ch2 id=\u0022恢复规则\u0022\u003e恢复规则\u003c\/h2\u003e\n\u003ch3 id=\u0022现行规则的恢复和替换\u0022\u003e现行规则的恢复和替换\u003c\/h3\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 class=\u0022chroma\u0022\u003e\u003ccode class=\u0022language-fallback\u0022 data-lang=\u0022fallback\u0022\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003eiptables-restore \u0026lt; \/etc\/iptables\/rules.v4\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003ch3 id=\u0022恢复同时保持当前规则\u0022\u003e恢复同时保持当前规则\u003c\/h3\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 class=\u0022chroma\u0022\u003e\u003ccode class=\u0022language-fallback\u0022 data-lang=\u0022fallback\u0022\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003eiptables-restore -n \u0026lt; \/etc\/iptables\/rules.v4\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003ch2 id=\u0022iptables的使用\u0022\u003eiptables的使用\u003c\/h2\u003e\n\u003cp\u003e\u003cstrong\u003e语法：\u003c\/strong\u003e\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2024-02-08T09:48:29.00Z",
+        "datePublished": "2024-02-08T09:48:29.00Z",
+        "dateModified": "2024-02-08T09:48:29.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicons\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+        
+        "http://localhost:1313/images/site-feature-image.png"
+
+
+      
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE\/",
+        "wordCount" : "243",
+        "genre" : [ 
+      
+      "文章"
+
+    ],
+        "keywords" : [ 
+      
+      "网络"
+
+    
+      
+        ,
+
+      
+      "linux"
+
+    ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar wrapper__sidebar--hidden"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/limxwu"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="mailto:limxuw@outlook.com"
+            target="_blank"
+            rel="noopener me"
+            aria-label="e-mail"
+            title="e-mail"
+          >
+            <i class="fa-solid fa-envelope fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main wrapper__main--fullscreen"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Debian12 Iptables防火墙配置</h1>
+      
+      <h2 id="保存规则">保存规则</h2>
+<h3 id="通过-iptables-persistent-保存">通过 iptables-persistent 保存</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">netfilter-persistent save
+</span></span></code></pre></div><h3 id="通过iptables保存">通过iptables保存</h3>
+<p>要稍后保存规则设置，请使用命令</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">iptables-save &gt; /etc/iptables/rules.v4
+</span></span><span class="line"><span class="cl">ip6tables-save &gt; /etc/iptables/rules.v6
+</span></span></code></pre></div><h2 id="恢复规则">恢复规则</h2>
+<h3 id="现行规则的恢复和替换">现行规则的恢复和替换</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">iptables-restore &lt; /etc/iptables/rules.v4
+</span></span></code></pre></div><h3 id="恢复同时保持当前规则">恢复同时保持当前规则</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">iptables-restore -n &lt; /etc/iptables/rules.v4
+</span></span></code></pre></div><h2 id="iptables的使用">iptables的使用</h2>
+<p><strong>语法：</strong></p>
+<p>iptables (选项) (参数)</p>
+<p>iptables -t 表名 规则链名 [规则号] -p 协议名 &ndash;sport 源端口 &ndash;dport 目标端口 -j 动作</p>
+<table>
+  <thead>
+      <tr>
+          <th>选项</th>
+          <th>解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>-t</td>
+          <td>&ndash;table table 对指定的表 table 进行操作， table 必须是 raw， nat，filter，mangle 中的一个。如果不指定此选项，默认的是 filter 表</td>
+      </tr>
+      <tr>
+          <td>-p</td>
+          <td>指定要匹配的数据包协议类型</td>
+      </tr>
+      <tr>
+          <td>-s</td>
+          <td>&ndash;source [!] address[/mask] ：把指定的一个／一组地址作为源地址，按此规则进行过滤。当后面没有 mask 时，address 是一个地址，比如：192.168.1.1；当 mask 指定时，可以表示一组范围内的地址，比如：192.168.1.0/255.255.255.0。</td>
+      </tr>
+      <tr>
+          <td>-d</td>
+          <td>&ndash;destination [!] address[/mask] ：地址格式同上，但这里是指定地址为目的地址，按此进行过滤</td>
+      </tr>
+      <tr>
+          <td>-i</td>
+          <td>&ndash;in-interface [!] ：指定数据包的来自来自网络接口，比如最常见的 eth0 。注意：它只对 INPUT，FORWARD，PREROUTING 这三个链起作用。如果没有指定此选项， 说明可以来自任何一个网络接口。同前面类似，&quot;!&quot; 表示取反。</td>
+      </tr>
+      <tr>
+          <td>-o</td>
+          <td>&ndash;out-interface [!] ：指定数据包出去的网络接口。只对 OUTPUT，FORWARD，POSTROUTING 三个链起作用</td>
+      </tr>
+      <tr>
+          <td>-L</td>
+          <td>&ndash;list [chain] 列出链 chain 上面的所有规则，如果没有指定链，列出表上所有链的所有规则。</td>
+      </tr>
+      <tr>
+          <td>-A</td>
+          <td>&ndash;append chain rule-specification 在指定链 chain 的末尾插入指定的规则，也就是说，这条规则会被放到最后，最后才会被执行。规则是由后面的匹配来指定。</td>
+      </tr>
+      <tr>
+          <td>-I</td>
+          <td>&ndash;insert chain [rulenum] rule-specification 在链 chain 中的指定位置插入一条或多条规则。如果指定的规则号是1，则在链的头部插入。这也是默认的情况，如果没有指定规则号。</td>
+      </tr>
+      <tr>
+          <td>-D</td>
+          <td>&ndash;delete chain rule-specification -D, &ndash;delete chain rulenum 在指定的链 chain 中删除一个或多个指定规则。</td>
+      </tr>
+      <tr>
+          <td>-R</td>
+          <td>&ndash;replace 替换/修改第几条规则</td>
+      </tr>
+      <tr>
+          <td>-F</td>
+          <td>&ndash;flush [chain] 清空指定链 chain 上面的所有规则。如果没有指定链，清空该表上所有链的所有规则</td>
+      </tr>
+      <tr>
+          <td>-N</td>
+          <td>&ndash;new-chain chain 用指定的名字创建一个新的链。</td>
+      </tr>
+      <tr>
+          <td>-X</td>
+          <td>&ndash;delete-chain [chain] ：删除指定的链，这个链必须没有被其它任何规则引用，而且这条上必须没有任何规则。如果没有指定链名，则会删除该表中所有非内置的链。</td>
+      </tr>
+      <tr>
+          <td>-E</td>
+          <td>&ndash;rename-chain old-chain new-chain ：用指定的新名字去重命名指定的链。这并不会对链内部造成任何影响</td>
+      </tr>
+      <tr>
+          <td>-Z</td>
+          <td>&ndash;zero [chain] ：把指定链，或者表中的所有链上的所有计数器清零。</td>
+      </tr>
+      <tr>
+          <td>-j</td>
+          <td>&ndash;jump target ：即满足某条件时该执行什么样的动作。target 可以是内置的目标，比如 ACCEPT，也可以是用户自定义的链。</td>
+      </tr>
+      <tr>
+          <td>-h</td>
+          <td>显示帮助信息</td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th><strong>参数</strong></th>
+          <th><strong>作用</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>-P</td>
+          <td>设置默认策略:iptables -P INPUT (DROP</td>
+      </tr>
+      <tr>
+          <td>-F</td>
+          <td>清空规则链</td>
+      </tr>
+      <tr>
+          <td>-L</td>
+          <td>查看规则链</td>
+      </tr>
+      <tr>
+          <td>-A</td>
+          <td>在规则链的末尾加入新规则</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>四表：</strong></p>
+<p>表的作用：容纳各种规则链</p>
+<ul>
+<li>raw ：确定是否对该数据包进行状态跟踪</li>
+<li>mangle ：修改数据包内容，用来做流量整形的，给数据包设置标记</li>
+<li>nat ：负责网络地址转换，用来修改数据源包中的源、目标IP地址或端口</li>
+<li>filter ：负责过滤数据包，确定是否放行该数据包（过滤）</li>
+</ul>
+<p><strong>五链：</strong></p>
+<p>规则链的作用：容纳各种防火墙规则</p>
+<ul>
+<li>INPUT链 ：处理输入数据包,匹配目标IP为本机的数据包</li>
+<li>OUTPUT链 ：处理输出数据包,一般不在此链上做配置</li>
+<li>FORWARD链 ：处理转发数据包。</li>
+<li>PREROUTING链 ：在进行路由选择前处理数据包，用来修改目的地址，用来做DNAT,相当于把内网服务器的IP和端口映射到路由器的外网IP和端口上</li>
+<li>POSTOUTING链 ：在进行路由选择后处理数据包，用来修改源地址，用来做SNAT,相当于内网通过路由器NAT转换功能实现内网主机通过一个公网IP地址上</li>
+</ul>
+<h3 id="设置步骤">设置步骤</h3>
+<ol>
+<li>
+<p>iptables默认规则是全部放通，所以第一步将所有外部流量屏蔽。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">iptables -P INPUT DROP
+</span></span><span class="line"><span class="cl">iptables -P FORWARD DROP
+</span></span></code></pre></div></li>
+<li>
+<p>放通22端口、ICPM、出流量</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">iptables -I INPUT -p tcp --dport <span class="m">22</span> -j ACCEPT
+</span></span><span class="line"><span class="cl"><span class="c1">#允许icmp包通过,也就是允许ping</span>
+</span></span><span class="line"><span class="cl">iptables -A INPUT -p icmp -m icmp --icmp-type <span class="m">8</span> -j ACCEPT
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#本机对外请求相当于OUTPUT,对于返回数据包必须接收啊，这相当于INPUT了</span>
+</span></span><span class="line"><span class="cl">iptables -I INPUT -i lo -j ACCEPT
+</span></span><span class="line"><span class="cl">iptables -I INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+</span></span></code></pre></div></li>
+<li>
+<p>保存iptable</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">netfilter-persistent save
+</span></span></code></pre></div></li>
+</ol>
+
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/%E6%96%87%E7%AB%A0/">文章</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/%E7%BD%91%E7%BB%9C/">网络</a><a class="tag" href="/tags/linux/">linux</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

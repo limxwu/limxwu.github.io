@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web on 布知花树</title>
+    <link>https://www.limxwu.fun/tags/web.html</link>
+    <description>Recent content in Web on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 24 Aug 2023 00:17:09 +0000</lastBuildDate><atom:link href="https://www.limxwu.fun/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTTP知识点梳理</title>
+      <link>https://www.limxwu.fun/posts/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:17:09 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html</guid>
+      
+        <description>&lt;h2 id=&#34;什么是http&#34;&gt;什么是HTTP&lt;/h2&gt;
+&lt;p&gt;HTTP全称Hypertext Transfer Protocol,意为超文本传输协议，是一个应用层用于出书超媒体文档（如HTML)的协议。它是专为浏览器和Web服务器之间的通信而设计的，但它也可用于其他目的。HTTP遵循典型的BS模型，客户端打开连接发出请求，等待收到相应。HTTP是一个无状态协议，表示服务器不会在两个请求之间保留任何数据（状态）。&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

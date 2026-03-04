@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>容器 on 布知花树</title>
+    <link>https://www.limxwu.fun/tags/%E5%AE%B9%E5%99%A8.html</link>
+    <description>Recent content in 容器 on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 14 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://www.limxwu.fun/tags/%E5%AE%B9%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>calico部署BGP模式的高可用k8s集群</title>
+      <link>https://www.limxwu.fun/posts/simpread-how-to-install-kubernetes-cluster-on-debian-12-.html</link>
+      <pubDate>Thu, 14 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/simpread-how-to-install-kubernetes-cluster-on-debian-12-.html</guid>
+      
+        <description>&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>simpread-k8s 系列 13-calico 部署 BGP 模式的高可用 k8s 集群 - TinyChen&#39;s Studio - 互联网技术学习工作经验分享</title>
+      <link>https://www.limxwu.fun/posts/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.html</link>
+      <pubDate>Wed, 28 Feb 2024 14:07:49 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

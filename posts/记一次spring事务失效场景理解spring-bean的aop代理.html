@@ -1,0 +1,479 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <meta charset="utf-8" /><title>
+    limxwu
+        |
+        记一次Spring事务失效场景，理解Spring Bean的AOP代理
+      
+
+    
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.min.49bfd2dbac6030a3a24fe7cb768d3d0dd9d223458e88f7d6cf5fe7aa806aaa2d.css" integrity="sha256-Sb/S26xgMKOiT&#43;fLdo09DdnSI0WOiPfWz1/nqoBqqi0=" crossorigin="anonymous" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/faviconsfavicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/faviconsapple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/faviconsfavicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/faviconsfavicon-16x16.png" />
+
+  <link rel="canonical" href="https://www.limxwu.fun/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="记一次Spring事务失效场景，理解Spring Bean的AOP代理">
+  <meta name="twitter:description" content="在Spring中，我们经常使用@Transactional注解开启事务，在这个注解中有个propagation属性用来控制事务的传播，此次失效场景中使用Propagation.NEVER，Spring中是这样描述的：">
+
+
+
+  
+  <meta property="og:url" content="https://www.limxwu.fun/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="记一次Spring事务失效场景，理解Spring Bean的AOP代理">
+  <meta property="og:description" content="在Spring中，我们经常使用@Transactional注解开启事务，在这个注解中有个propagation属性用来控制事务的传播，此次失效场景中使用Propagation.NEVER，Spring中是这样描述的：">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-24T00:24:41+00:00">
+    <meta property="article:modified_time" content="2023-08-24T00:24:41+00:00">
+    <meta property="article:tag" content="Java">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "记一次Spring事务失效场景，理解Spring Bean的AOP代理",
+        "headline": "记一次Spring事务失效场景，理解Spring Bean的AOP代理",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003cp\u003e在Spring中，我们经常使用\u003ccode\u003e@Transactional\u003c\/code\u003e注解开启事务，在这个注解中有个propagation属性用来控制事务的传播，此次失效场景中使用\u003ccode\u003ePropagation.NEVER\u003c\/code\u003e，Spring中是这样描述的：\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.limxwu.fun\/posts\/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2023-08-24T00:24:41.00Z",
+        "datePublished": "2023-08-24T00:24:41.00Z",
+        "dateModified": "2023-08-24T00:24:41.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "https://www.limxwu.fun/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/www.limxwu.fun\/faviconsfavicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/www.limxwu.fun\/posts\/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html",
+        "wordCount" : "1067",
+        "genre" : [ 
+      
+      "文章"
+
+    ],
+        "keywords" : [ 
+      
+      "java"
+
+    ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>记一次Spring事务失效场景，理解Spring Bean的AOP代理</h1>
+      
+      <p>在Spring中，我们经常使用<code>@Transactional</code>注解开启事务，在这个注解中有个propagation属性用来控制事务的传播，此次失效场景中使用<code>Propagation.NEVER</code>，Spring中是这样描述的：</p>
+<blockquote>
+<p>Execute non-transactionally, throw an exception if a transaction exists. Analogous to EJB transaction attribute of the same name.</p>
+</blockquote>
+<p>场景复现代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">JdbcTemplate</span><span class="w"> </span><span class="n">jdbcTemplate</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">UserService</span><span class="p">(</span><span class="n">JdbcTemplate</span><span class="w"> </span><span class="n">jdbcTemplate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">jdbcTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jdbcTemplate</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Transactional</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&#34;insert into db_user(name,sex)value(&#39;李四&#39;,&#39;男&#39;) &#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">insertRandomUser</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">()</span><span class="w"> </span><span class="p">{{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">setId</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Transactional</span><span class="p">(</span><span class="n">propagation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Propagation</span><span class="p">.</span><span class="na">NEVER</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">insertRandomUser</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&#34;insert into db_user(name,sex)value(&#39;张三&#39;,&#39;男&#39;) &#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在<code>getUser()</code>方法启用事务，并且在其中调用配置了<code>Propagation.NEVER</code>的<code>insertRandomUser()</code>方法，按照Spring对<code>Propagation.NEVER</code>描述，调用<code>insertRandomUser()</code>是应该抛出异常的。
+执行程序，输出如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">10:21:03.620 [main] DEBUG org.springframework.jdbc.support.JdbcTransactionManager - Creating new transaction with name [pers.limx.practice.spring.bean.UserService.getUser]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+</span></span><span class="line"><span class="cl">10:21:04.796 [main] DEBUG org.springframework.jdbc.support.JdbcTransactionManager - Acquired Connection [com.mysql.cj.jdbc.ConnectionImpl@4303b7f0] for JDBC transaction
+</span></span><span class="line"><span class="cl">10:21:04.798 [main] DEBUG org.springframework.jdbc.support.JdbcTransactionManager - Switching JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@4303b7f0] to manual commit
+</span></span><span class="line"><span class="cl">before Service
+</span></span><span class="line"><span class="cl">10:21:04.816 [main] DEBUG org.springframework.jdbc.core.JdbcTemplate - Executing SQL statement [insert into db_user(name,sex)value(&#39;李四&#39;,&#39;男&#39;) ]
+</span></span><span class="line"><span class="cl">10:21:04.860 [main] DEBUG org.springframework.jdbc.core.JdbcTemplate - Executing SQL statement [insert into db_user(name,sex)value(&#39;张三&#39;,&#39;男&#39;) ]
+</span></span><span class="line"><span class="cl">10:21:04.898 [main] DEBUG org.springframework.jdbc.support.JdbcTransactionManager - Initiating transaction commit
+</span></span><span class="line"><span class="cl">10:21:04.898 [main] DEBUG org.springframework.jdbc.support.JdbcTransactionManager - Committing JDBC transaction on Connection [com.mysql.cj.jdbc.ConnectionImpl@4303b7f0]
+</span></span><span class="line"><span class="cl">10:21:04.926 [main] DEBUG org.springframework.jdbc.support.JdbcTransactionManager - Releasing JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@4303b7f0] after transaction
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">进程已结束，退出代码为 0
+</span></span></code></pre></div><p>可以看到，两条SQL都执行成功，并没有抛出异常，想要理解其中的原因必须要理解Spring AOP是如何代理Bean的。</p>
+<p>Spring事务是通过AOP实现的。用上文代码中UserSevice举例，这个类中有需要事务控制的方法，则Spring AOP在原有的UserSevice Bean的基础上，生成其代理对象，在需要注入UserService的地方实际注入是生成的代理对象UserServiceProxy,事务的实现就体现在调用方法前后加入对事务的控制。
+伪代码逻辑如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserServiceProxy</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">UserService</span><span class="w"> </span><span class="n">target</span><span class="p">;</span><span class="c1">//被代理的对象</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//创建数据库连接con</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//con.setAutoCommit(false);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">doBefore</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target</span><span class="p">.</span><span class="na">getUser</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">doAfter</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">//con.commit();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">RuntimeException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">//con.rollback();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>回到这次事务失效的问题上，在诸如Controller的外部调用事务控制的方法时，调用的是动态代理类的代理方法，由此实现了事务的控制，但是在<code>getUser()</code>方法中调用<code>insertRandomUser()</code>调用的是UserService target本身的方法，而不是代理对象的<code>insertRandomUser()</code>，事务自然也就失效了。</p>
+
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/%E6%96%87%E7%AB%A0/">文章</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/java/">java</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

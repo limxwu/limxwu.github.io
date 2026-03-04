@@ -1,0 +1,489 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" /><title>
+    
+      
+        Openwrt配置BGP |
+      limxwu
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.css" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/openwrt%E9%85%8D%E7%BD%AEbgp/" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/site-feature-image.png">
+  <meta name="twitter:title" content="Openwrt配置BGP">
+  <meta name="twitter:description" content="安装FRR opkg update opkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra 或者">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/openwrt%E9%85%8D%E7%BD%AEbgp/">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="Openwrt配置BGP">
+  <meta property="og:description" content="安装FRR opkg update opkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra 或者">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-08T08:50:44+00:00">
+    <meta property="article:modified_time" content="2024-05-08T08:50:44+00:00">
+    <meta property="article:tag" content="网络">
+    <meta property="article:tag" content="Openwrt">
+    <meta property="og:image" content="http://localhost:1313/images/site-feature-image.png">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Openwrt配置BGP",
+        "headline": "Openwrt配置BGP",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch2 id=\u0022安装frr\u0022\u003e安装FRR\u003c\/h2\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 class=\u0022chroma\u0022\u003e\u003ccode class=\u0022language-shell\u0022 data-lang=\u0022shell\u0022\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003eopkg update\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003eopkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003cp\u003e或者\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/openwrt%E9%85%8D%E7%BD%AEbgp\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2024-05-08T08:50:44.00Z",
+        "datePublished": "2024-05-08T08:50:44.00Z",
+        "dateModified": "2024-05-08T08:50:44.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicons\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+        
+        "http://localhost:1313/images/site-feature-image.png"
+
+
+      
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/openwrt%E9%85%8D%E7%BD%AEbgp\/",
+        "wordCount" : "145",
+        "genre" : [ 
+      
+      "文章"
+
+    ],
+        "keywords" : [ 
+      
+      "网络"
+
+    
+      
+        ,
+
+      
+      "openwrt"
+
+    ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar wrapper__sidebar--hidden"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/limxwu"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="mailto:limxuw@outlook.com"
+            target="_blank"
+            rel="noopener me"
+            aria-label="e-mail"
+            title="e-mail"
+          >
+            <i class="fa-solid fa-envelope fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main wrapper__main--fullscreen"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Openwrt配置BGP</h1>
+      
+      <h2 id="安装frr">安装FRR</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">opkg update
+</span></span><span class="line"><span class="cl">opkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra
+</span></span></code></pre></div><p>或者</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> opkg update &amp;&amp; opkg install quagga quagga-zebra quagga-bgpd quagga-vtysh
+</span></span></code></pre></div><h2 id="配置">配置</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ vtysh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt# conf t
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt<span class="o">(</span>config<span class="o">)</span><span class="c1"># router bgp 65000</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt<span class="o">(</span>config-router<span class="o">)</span><span class="c1"># neighbor 192.168.1.5 remote-as 65001</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt<span class="o">(</span>config-router<span class="o">)</span><span class="c1"># neighbor 192.168.1.5 description ubuntu-dev1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt<span class="o">(</span>config-router<span class="o">)</span><span class="c1"># neighbor 192.168.1.6 remote-as 65001</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt<span class="o">(</span>config-router<span class="o">)</span><span class="c1"># neighbor 192.168.1.6 description ubuntu-dev2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt<span class="o">(</span>config-router<span class="o">)</span><span class="c1"># exit</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OpenWrt<span class="o">(</span>config<span class="o">)</span><span class="c1"># exit</span>
+</span></span></code></pre></div><h2 id="查看">查看</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">OpenWrt# show ip bgp summary
+</span></span><span class="line"><span class="cl">BGP router identifier 192.168.1.2, <span class="nb">local</span> AS number <span class="m">65000</span>
+</span></span><span class="line"><span class="cl">RIB entries 0, using <span class="m">0</span> bytes of memory
+</span></span><span class="line"><span class="cl">Peers 2, using <span class="m">18</span> KiB of memory
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Neighbor        V         AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+</span></span><span class="line"><span class="cl">192.168.1.5     <span class="m">4</span> <span class="m">65001</span>       <span class="m">0</span>       <span class="m">0</span>        <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span> never    Active
+</span></span><span class="line"><span class="cl">192.168.1.6     <span class="m">4</span> <span class="m">65001</span>       <span class="m">0</span>       <span class="m">0</span>        <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span> never    Active
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Total number of neighbors <span class="m">2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Total num. Established sessions <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Total num. of routes received     <span class="m">0</span>
+</span></span></code></pre></div>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/%E6%96%87%E7%AB%A0/">文章</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/%E7%BD%91%E7%BB%9C/">网络</a><a class="tag" href="/tags/openwrt/">openwrt</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

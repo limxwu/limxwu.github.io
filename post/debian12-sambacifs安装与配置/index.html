@@ -1,0 +1,525 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" /><title>
+    
+      
+        Debian12 SambaCIFS安装与配置 |
+      limxwu
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.css" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/post/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/site-feature-image.png">
+  <meta name="twitter:title" content="Debian12 SambaCIFS安装与配置">
+  <meta name="twitter:description" content="1.背景 主机pudding上部署了多个服务，现需要pudding向局域网内提供文件共享服务，服务对象包括不限于windows、android、ios、linux、k8s node以及电视盒子等。
+2.规划 文件共享服务需要满足以下条件：
+支持多设备、多平台、易操作。需要向多种OS提供文件共享服务且易于浏览 支持多用户的文件权限控制，各个用户之间既能相互共享文件又能对私有文件保持隔离性 目前主机pudding已经投入使用，文件共享服务不能对现有服务造成影响 现常见的文件共享协议有：SMB、NFS、FTP、对象存储、iSCSI、FC SAN，关于这几种协议的对比可以参考这篇《NFS、FTP、SMB、WebDav、DLNA协议，傻傻分不清？》，其中iSCSI需要对磁盘重新分区，FC SAN需要光纤网络的支持，现实条件不满足，对比下来SMB在设备兼容性以及权限控制方面有着其他协议不可替代的优势，在技术选型方面使用SMB作为局域网内文件共享协议。">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/post/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="Debian12 SambaCIFS安装与配置">
+  <meta property="og:description" content="1.背景 主机pudding上部署了多个服务，现需要pudding向局域网内提供文件共享服务，服务对象包括不限于windows、android、ios、linux、k8s node以及电视盒子等。
+2.规划 文件共享服务需要满足以下条件：
+支持多设备、多平台、易操作。需要向多种OS提供文件共享服务且易于浏览 支持多用户的文件权限控制，各个用户之间既能相互共享文件又能对私有文件保持隔离性 目前主机pudding已经投入使用，文件共享服务不能对现有服务造成影响 现常见的文件共享协议有：SMB、NFS、FTP、对象存储、iSCSI、FC SAN，关于这几种协议的对比可以参考这篇《NFS、FTP、SMB、WebDav、DLNA协议，傻傻分不清？》，其中iSCSI需要对磁盘重新分区，FC SAN需要光纤网络的支持，现实条件不满足，对比下来SMB在设备兼容性以及权限控制方面有着其他协议不可替代的优势，在技术选型方面使用SMB作为局域网内文件共享协议。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2023-12-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-12-22T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/images/site-feature-image.png">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "post",
+        "name": "Debian12 SambaCIFS安装与配置",
+        "headline": "Debian12 SambaCIFS安装与配置",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch1 id=\u00221背景\u0022\u003e1.背景\u003c\/h1\u003e\n\u003cp\u003e主机pudding上部署了多个服务，现需要pudding向局域网内提供文件共享服务，服务对象包括不限于windows、android、ios、linux、k8s node以及电视盒子等。\u003c\/p\u003e\n\u003ch1 id=\u00222规划\u0022\u003e2.规划\u003c\/h1\u003e\n\u003cp\u003e文件共享服务需要满足以下条件：\u003c\/p\u003e\n\u003cul\u003e\n\u003cli\u003e支持多设备、多平台、易操作。需要向多种OS提供文件共享服务且易于浏览\u003c\/li\u003e\n\u003cli\u003e支持多用户的文件权限控制，各个用户之间既能相互共享文件又能对私有文件保持隔离性\u003c\/li\u003e\n\u003cli\u003e目前主机pudding已经投入使用，文件共享服务不能对现有服务造成影响\u003c\/li\u003e\n\u003c\/ul\u003e\n\u003cp\u003e现常见的文件共享协议有：\u003ca href=\u0022https:\/\/en.wikipedia.org\/wiki\/Server_Message_Block\u0022\u003eSMB\u003c\/a\u003e、\u003ca href=\u0022https:\/\/en.wikipedia.org\/wiki\/Network_File_System\u0022\u003eNFS\u003c\/a\u003e、\u003ca href=\u0022https:\/\/en.wikipedia.org\/wiki\/File_Transfer_Protocol\u0022\u003eFTP\u003c\/a\u003e、\u003ca href=\u0022https:\/\/en.wikipedia.org\/wiki\/Amazon_S3\u0022\u003e对象存储\u003c\/a\u003e、\u003ca href=\u0022https:\/\/en.wikipedia.org\/wiki\/ISCSI\u0022\u003eiSCSI\u003c\/a\u003e、FC SAN，关于这几种协议的对比可以参考这篇\u003ca href=\u0022https:\/\/zhuanlan.zhihu.com\/p\/411161467\u0022\u003e《\u003cstrong\u003eNFS、FTP、SMB、WebDav、DLNA协议，傻傻分不清？》\u003c\/strong\u003e\u003c\/a\u003e，其中iSCSI需要对磁盘重新分区，FC SAN需要光纤网络的支持，现实条件不满足，对比下来SMB在设备兼容性以及权限控制方面有着其他协议不可替代的优势，在技术选型方面使用SMB作为局域网内文件共享协议。\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/post\/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2023-12-22T00:00:00.00Z",
+        "datePublished": "2023-12-22T00:00:00.00Z",
+        "dateModified": "2023-12-22T00:00:00.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicons\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+        
+        "http://localhost:1313/images/site-feature-image.png"
+
+
+      
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/post\/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE\/",
+        "wordCount" : "210",
+        "genre" : [ ],
+        "keywords" : [ ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/limxwu"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="mailto:limxuw@outlook.com"
+            target="_blank"
+            rel="noopener me"
+            aria-label="e-mail"
+            title="e-mail"
+          >
+            <i class="fa-solid fa-envelope fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/post/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href=""
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Debian12 SambaCIFS安装与配置</h1>
+      
+      
+        <ul class="post__meta">
+          <li class="post__meta-item">
+            <em class="fas fa-calendar-day post__meta-icon"></em>
+            <span class="post__meta-text"
+              >
+                
+                  22/12/2023
+                
+
+              
+            </span>
+          </li>
+          <li class="post__meta-item">
+            <em class="fas fa-stopwatch post__meta-icon"></em>
+            <span class="post__meta-text">阅读时间 1 分钟</span>
+          </li>
+        </ul>
+      <h1 id="1背景">1.背景</h1>
+<p>主机pudding上部署了多个服务，现需要pudding向局域网内提供文件共享服务，服务对象包括不限于windows、android、ios、linux、k8s node以及电视盒子等。</p>
+<h1 id="2规划">2.规划</h1>
+<p>文件共享服务需要满足以下条件：</p>
+<ul>
+<li>支持多设备、多平台、易操作。需要向多种OS提供文件共享服务且易于浏览</li>
+<li>支持多用户的文件权限控制，各个用户之间既能相互共享文件又能对私有文件保持隔离性</li>
+<li>目前主机pudding已经投入使用，文件共享服务不能对现有服务造成影响</li>
+</ul>
+<p>现常见的文件共享协议有：<a href="https://en.wikipedia.org/wiki/Server_Message_Block">SMB</a>、<a href="https://en.wikipedia.org/wiki/Network_File_System">NFS</a>、<a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol">FTP</a>、<a href="https://en.wikipedia.org/wiki/Amazon_S3">对象存储</a>、<a href="https://en.wikipedia.org/wiki/ISCSI">iSCSI</a>、FC SAN，关于这几种协议的对比可以参考这篇<a href="https://zhuanlan.zhihu.com/p/411161467">《<strong>NFS、FTP、SMB、WebDav、DLNA协议，傻傻分不清？》</strong></a>，其中iSCSI需要对磁盘重新分区，FC SAN需要光纤网络的支持，现实条件不满足，对比下来SMB在设备兼容性以及权限控制方面有着其他协议不可替代的优势，在技术选型方面使用SMB作为局域网内文件共享协议。</p>
+<h1 id="3概览">3.概览</h1>
+<p><strong>服务器消息块( Service Message Block , SMB )</strong> 是一种通信协议，主要由配备Microsoft Windows的计算机使用，通常用于在网络上的节点之间共享文件、打印机、串行端口和各种通信。它使用NTLM或Kerberos协议进行用户身份验证。它还提供了经过身份验证的进程间通信（IPC）机制。</p>
+<p>服务器消息块 (SMB) 支持通过计算机网络进行文件共享、打印机共享、网络浏览和进程间通信（通过命名管道）。SMB 是 Microsoft分布式文件系统实施的基础。</p>
+<h1 id="4安装">4.安装</h1>
+<h2 id="41更新系统">4.1.更新系统</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt update &amp;&amp; sudo apt upgrade -y
+</span></span></code></pre></div><p><img src="http://s3.limxwu.fun/public/blog/2023-11-11-myvkogrn.png" alt="2023-11-11-myvkogrn.png"></p>
+<h2 id="42安装smb">4.2.安装SMB</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt install samba -y
+</span></span></code></pre></div><p><img src="http://s3.limxwu.fun/public/blog/2023-11-11-wqqjedta.png" alt="img"></p>
+<h1 id="5配置">5.配置</h1>
+<p>打开配置文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo vim /etc/samba/smb.conf
+</span></span></code></pre></div><p><img src="http://s3.limxwu.fun/public/blog/2023-11-11-jhzxhzrm.png" alt="img"></p>
+<p>Samba的配置文件为/etc/samba/smb.conf，通过修改这个配置文件来完成我们的各种需求。打开这个配置文件，你会发现很多内容都用 <code>#</code> 或者 <code>;</code> 注视掉了。先看一下未被注释掉的部分:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[</span><span class="n">global</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">workgroup</span> <span class="o">=</span> <span class="n">MYGROUP</span>
+</span></span><span class="line"><span class="cl">        <span class="n">server</span> <span class="n">string</span> <span class="o">=</span> <span class="n">Samba</span> <span class="n">Server</span> <span class="n">Version</span> <span class="o">%</span><span class="n">v</span>
+</span></span><span class="line"><span class="cl">        <span class="n">security</span> <span class="o">=</span> <span class="n">user</span>
+</span></span><span class="line"><span class="cl">        <span class="n">passdb</span> <span class="n">backend</span> <span class="o">=</span> <span class="n">tdbsam</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">load</span> <span class="n">printers</span> <span class="o">=</span> <span class="n">yes</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cups</span> <span class="n">options</span> <span class="o">=</span> <span class="n">raw</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">homes</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">comment</span> <span class="o">=</span> <span class="n">Home</span> <span class="n">Directories</span>
+</span></span><span class="line"><span class="cl">        <span class="n">browseable</span> <span class="o">=</span> <span class="n">no</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writable</span> <span class="o">=</span> <span class="n">yes</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">printers</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">comment</span> <span class="o">=</span> <span class="n">All</span> <span class="n">Printers</span>
+</span></span><span class="line"><span class="cl">        <span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">samba</span>
+</span></span><span class="line"><span class="cl">        <span class="n">browseable</span> <span class="o">=</span> <span class="n">no</span>
+</span></span><span class="line"><span class="cl">        <span class="n">guest</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">no</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writable</span> <span class="o">=</span> <span class="n">no</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printable</span> <span class="o">=</span> <span class="n">yes</span>
+</span></span></code></pre></div><p>主要有以上三个部分：[global], [homes], [printers]</p>
+<p>[global] 定义全局的配置，workgroup用来定义工作组，相信如果你安装过windows的系统，你会对这个workgroup不陌生。一般情况下，需要我们把这里的MYGROUP改成WORKGROUP（windows默认的工作组名字）。</p>
+<p>security = user #这里指定samba的安全等级。关于安全等级有四种：</p>
+<p>share：用户不需要账户及密码即可登录samba服务器</p>
+<p>user：由提供服务的samba服务器负责检查账户及密码（默认）</p>
+<p>server：检查账户及密码的工作由另一台windows或samba服务器负责</p>
+<p>domain：指定windows域控制服务器来验证用户的账户及密码。</p>
+<p>passdb backend = tdbsam # passdb backend（用户后台），samba有三种用户后台：smbpasswd, tdbsam和ldapsam.</p>
+<p>smbpasswd：该方式是使用smb工具smbpasswd给系统用户（真实用户或者虚拟用户）设置一个Samba密码，客户端就用此密码访问Samba资源。smbpasswd在/etc/samba中，有时需要手工创建该文件。</p>
+<p>tdbsam：使用数据库文件创建用户数据库。数据库文件叫passdb.tdb，在/etc/samba中。passdb.tdb用户数据库可使用 <code>smbpasswd -a</code> 创建Samba用户，要创建的Samba用户必须先是系统用户。也可使用pdbedit创建Samba账户。pdbedit参数很多，列出几个主要的：</p>
+<p>pdbedit -a username：新建Samba账户。</p>
+<p>pdbedit -x username：删除Samba账户。</p>
+<p>pdbedit -L：列出Samba用户列表，读取passdb.tdb数据库文件。</p>
+<p>pdbedit -Lv：列出Samba用户列表详细信息。</p>
+<p>pdbedit -c “[D]” -u username：暂停该Samba用户账号。</p>
+<p>pdbedit -c “[]” -u username：恢复该Samba用户账号。</p>
+<p>ldapsam：基于LDAP账户管理方式验证用户。首先要建立LDAP服务，设置 “passdb backend = ldapsam:ldap://LDAP Server”</p>
+<p>load printers 和 cups options 两个参数用来设置打印机相关。</p>
+<p>除了这些参数外，还有几个参数需要你了解：</p>
+<p>netbios name = MYSERVER # 设置出现在网上邻居中的主机名</p>
+<p>hosts allow = 127. 192.168.12. 192.168.13. # 用来设置允许的主机，如果在前面加 ”;” 则表示允许所有主机</p>
+<p>log file = /var/log/samba/%m.log #定义samba的日志，这里的%m是上面的netbios name</p>
+<p>max log size = 50 # 指定日志的最大容量，单位是K</p>
+<p>[homes] 该部分内容共享用户自己的家目录，也就是说，当用户登录到samba服务器上时实际上是进入到了该用户的家目录，用户登陆后，共享名不是homes而是用户自己的标识符，对于单纯的文件共享的环境来说，这部分可以注视掉。</p>
+<p>[printers] 该部分内容设置打印机共享。</p>
+<p>此处将[home]下的<strong>read only</strong>设置为no，并通过pdbedit -a username新建用户。</p>
+<h1 id="6连接">6.连接</h1>
+<p>windows文件管理器中添加一个网络位置</p>
+<p><img src="http://s3.limxwu.fun/public/blog/2023-11-12-bsorkput.png" alt="img"></p>
+<p>输入格式为：\ip\username</p>
+<p><img src="http://s3.limxwu.fun/public/blog/2023-11-12-hqlloamm.png" alt="img"></p>
+<p>输入账号及密码后下一步直到创建完成，成功挂载目录。</p>
+<p><img src="http://s3.limxwu.fun/public/blog/2023-11-12-aeoeubyy.png" alt="img"></p>
+
+</div>
+    <div class="post__footer">
+      
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

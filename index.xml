@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>布知花树</title>
+    <link>https://www.limxwu.fun/index.html</link>
+    <description>Recent content on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 12 Sep 2025 12:00:00 +0000</lastBuildDate><atom:link href="https://www.limxwu.fun/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitFlow下Snap与正式版本的管理</title>
+      <link>https://www.limxwu.fun/posts/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86.html</link>
+      <pubDate>Fri, 12 Sep 2025 12:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/github-flow%E4%B8%8Bsnap%E4%B8%8E%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9C%AC%E7%9A%84%E7%AE%A1%E7%90%86.html</guid>
+      
+        <description>&lt;p&gt;基于GitHub的GitFlow如何管理java的snapshot与正式版本，这是一个非常经典且重要的问题。将 GitHub Flow 的敏捷性与 Java 项目的 Snapshot/Release 版本管理相结合，可以构建一个高效且可靠的发布流程。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>conda常用命令</title>
+      <link>https://www.limxwu.fun/posts/conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html</link>
+      <pubDate>Mon, 08 Sep 2025 12:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html</guid>
+      
+        <description>&lt;p&gt;更新conda&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;conda update conda
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;创建虚拟环境&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>debian安装wireguard</title>
+      <link>https://www.limxwu.fun/posts/debian%E5%AE%89%E8%A3%85wireguard.html</link>
+      <pubDate>Thu, 28 Aug 2025 12:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/debian%E5%AE%89%E8%A3%85wireguard.html</guid>
+      
+        <description>&lt;h1 id=&#34;安装wireguard&#34;&gt;安装wireguard&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;apt install wireguard
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;设置配置文件&#34;&gt;设置配置文件&lt;/h1&gt;
+&lt;p&gt;在&lt;code&gt;/etc/wireguard&lt;/code&gt; 路径下创建配置文件wg.conf&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>GitFlow</title>
+      <link>https://www.limxwu.fun/posts/gitflow.html</link>
+      <pubDate>Sun, 24 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/gitflow.html</guid>
+      
+        <description>&lt;p&gt;GitFlow 是一种基于 Git 的分支管理工作流模型，规定了什么时候该创建什么分支，以及分支应该合并到哪里。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>java基本类型转换</title>
+      <link>https://www.limxwu.fun/posts/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html</link>
+      <pubDate>Wed, 13 Aug 2025 12:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.html</guid>
+      
+        <description>&lt;h1 id=&#34;引言&#34;&gt;引言：&lt;/h1&gt;
+&lt;p&gt;读JDK17源码中，发现Bits类中有这样一段代码：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>钱塘江大桥</title>
+      <link>https://www.limxwu.fun/monment/%E5%A4%95%E9%98%B3%E4%B8%8B%E7%81%AB%E8%BD%A6%E9%A9%B6%E8%BF%87%E9%92%B1%E5%A1%98%E6%B1%9F%E5%A4%A7%E6%A1%A5.html</link>
+      <pubDate>Thu, 21 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/monment/%E5%A4%95%E9%98%B3%E4%B8%8B%E7%81%AB%E8%BD%A6%E9%A9%B6%E8%BF%87%E9%92%B1%E5%A1%98%E6%B1%9F%E5%A4%A7%E6%A1%A5.html</guid>
+      
+        <description>23年12月到杭州出差，经过钱塘江，刚好遇见夕阳下火车由西向东驶来，轰鸣声由远及近....</description>
+      
+    </item>
+    
+    <item>
+      <title>Http客户端连接数占用分析</title>
+      <link>https://www.limxwu.fun/posts/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html</link>
+      <pubDate>Sat, 10 Aug 2024 06:33:21 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/http%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%95%B0%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90.html</guid>
+      
+        <description>&lt;h1 id=&#34;问题描述&#34;&gt;问题描述&lt;/h1&gt;
+&lt;p&gt;Java应用程序中调用阿里云三方服务，阿里云告警服务SLB连接数逼近上限5000。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Openwrt配置BGP</title>
+      <link>https://www.limxwu.fun/posts/openwrt%E9%85%8D%E7%BD%AEbgp.html</link>
+      <pubDate>Wed, 08 May 2024 08:50:44 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/openwrt%E9%85%8D%E7%BD%AEbgp.html</guid>
+      
+        <description>&lt;h2 id=&#34;安装frr&#34;&gt;安装FRR&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>清明南京游</title>
+      <link>https://www.limxwu.fun/monment/%E6%B8%85%E6%98%8E%E5%8D%97%E4%BA%AC%E6%B8%B8.html</link>
+      <pubDate>Sat, 20 Apr 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/monment/%E6%B8%85%E6%98%8E%E5%8D%97%E4%BA%AC%E6%B8%B8.html</guid>
+      
+        <description>忙里偷闲，南京两日游</description>
+      
+    </item>
+    
+    <item>
+      <title>微服务的一些思考</title>
+      <link>https://www.limxwu.fun/posts/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83.html</link>
+      <pubDate>Wed, 20 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83.html</guid>
+      
+        <description>&lt;p&gt;微服务架构的优点包括：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>calico部署BGP模式的高可用k8s集群</title>
+      <link>https://www.limxwu.fun/posts/simpread-how-to-install-kubernetes-cluster-on-debian-12-.html</link>
+      <pubDate>Thu, 14 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/simpread-how-to-install-kubernetes-cluster-on-debian-12-.html</guid>
+      
+        <description>&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>延迟队列的实现方式</title>
+      <link>https://www.limxwu.fun/posts/%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F.html</link>
+      <pubDate>Sun, 10 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文摘自&lt;a href=&#34;https://cloud.tencent.com/developer/article/1659393&#34;&gt;一口气说出 6种 延时队列的实现方法，面试官也得服&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>mirotalk-视频会议</title>
+      <link>https://www.limxwu.fun/posts/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE.html</link>
+      <pubDate>Mon, 04 Mar 2024 23:50:02 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE.html</guid>
+      
+        <description>&lt;h2 id=&#34;基于webrtc---p2p---简单安全快速的实时视频会议&#34;&gt;基于WebRTC - P2P - 简单、安全、快速的实时视频会议&lt;/h2&gt;
+&lt;iframe src=&#34;https://p2p.mirotalk.com/join/75448RedBrick&#34; width=&#34;100%&#34; height=&#34;800px&#34; frameborder=&#34;0&#34; allowfullscreen=&#34;true&#34; framespacing=&#34;0&#34; style=&#34;display: inline-block&#34; allow=&#34;camera; microphone&#34;&gt;&lt;/iframe&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>simpread-k8s 系列 13-calico 部署 BGP 模式的高可用 k8s 集群 - TinyChen&#39;s Studio - 互联网技术学习工作经验分享</title>
+      <link>https://www.limxwu.fun/posts/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.html</link>
+      <pubDate>Wed, 28 Feb 2024 14:07:49 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>BGP是什么？如何工作的</title>
+      <link>https://www.limxwu.fun/posts/bgp%E6%98%AF%E4%BB%80%E4%B9%88%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84.html</link>
+      <pubDate>Tue, 27 Feb 2024 11:07:29 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/bgp%E6%98%AF%E4%BB%80%E4%B9%88%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://info.support.huawei.com/info-finder/encyclopedia/zh/BGP.html&#34;&gt;info.support.huawei.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Spring配置文件优先级</title>
+      <link>https://www.limxwu.fun/posts/spring%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7.html</link>
+      <pubDate>Thu, 22 Feb 2024 14:21:06 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/spring%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7.html</guid>
+      
+        <description>&lt;h1 id=&#34;springboot配置文件优先级&#34;&gt;SpringBoot配置文件优先级&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config&#34;&gt;3.2.2官方文档：&lt;/a&gt;Spring Boot 允许您外部化您的配置，以便您可以在不同的环境中使用相同的应用程序代码。您可以使用各种外部配置源，包括 Java 属性文件、YAML 文件、环境变量和命令行参数。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Debian12 iptables防火墙配置</title>
+      <link>https://www.limxwu.fun/posts/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE.html</link>
+      <pubDate>Thu, 08 Feb 2024 09:48:29 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE.html</guid>
+      
+        <description>&lt;h2 id=&#34;保存规则&#34;&gt;保存规则&lt;/h2&gt;
+&lt;h3 id=&#34;通过-iptables-persistent-保存&#34;&gt;通过 iptables-persistent 保存&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;netfilter-persistent save
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;通过iptables保存&#34;&gt;通过iptables保存&lt;/h3&gt;
+&lt;p&gt;要稍后保存规则设置，请使用命令&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>常用一句话脚本</title>
+      <link>https://www.limxwu.fun/posts/%E5%B8%B8%E7%94%A8%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%84%9A%E6%9C%AC.html</link>
+      <pubDate>Wed, 07 Feb 2024 09:54:02 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%B8%B8%E7%94%A8%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%84%9A%E6%9C%AC.html</guid>
+      
+        <description>&lt;p&gt;本篇记录了日常开发运维工作过程中经常用到的一些命令&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Debian12 SambaCIFS安装与配置</title>
+      <link>https://www.limxwu.fun/posts/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE.html</link>
+      <pubDate>Fri, 22 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/debian12-sambacifs%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE.html</guid>
+      
+        <description>&lt;h1 id=&#34;1背景&#34;&gt;1.背景&lt;/h1&gt;
+&lt;p&gt;主机pudding上部署了多个服务，现需要pudding向局域网内提供文件共享服务，服务对象包括不限于windows、android、ios、linux、k8s node以及电视盒子等。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>合并B站下载视频与音频脚本</title>
+      <link>https://www.limxwu.fun/posts/%E5%90%88%E5%B9%B6b%E7%AB%99%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91%E4%B8%8E%E9%9F%B3%E9%A2%91%E8%84%9A%E6%9C%AC.html</link>
+      <pubDate>Wed, 13 Dec 2023 23:08:50 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%90%88%E5%B9%B6b%E7%AB%99%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91%E4%B8%8E%E9%9F%B3%E9%A2%91%E8%84%9A%E6%9C%AC.html</guid>
+      
+        <description>&lt;p&gt;脚本如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$fileList&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-File&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$filenames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;foreach&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$filename&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$fileList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$filename&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-match&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;\.mp4$&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;ffmpeg&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-i&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;${filename}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.mp4&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-i&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;${filename}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.m4a&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-c:v&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;copy &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-c:a&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;aac&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;${filename}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.b.mp4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这段 PowerShell 脚本执行了以下操作：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>screen常用命令</title>
+      <link>https://www.limxwu.fun/posts/screen%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html</link>
+      <pubDate>Sun, 26 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/screen%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html</guid>
+      
+        <description>&lt;p&gt;记录screen常用命令&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Debian关闭交换内存</title>
+      <link>https://www.limxwu.fun/posts/debian%E5%85%B3%E9%97%AD%E4%BA%A4%E6%8D%A2%E5%86%85%E5%AD%98.html</link>
+      <pubDate>Wed, 18 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/debian%E5%85%B3%E9%97%AD%E4%BA%A4%E6%8D%A2%E5%86%85%E5%AD%98.html</guid>
+      
+        <description>&lt;p&gt;临时关闭：&lt;code&gt;sudo swapoff -a &lt;/code&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>如何保护代码中的敏感信息</title>
+      <link>https://www.limxwu.fun/posts/%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8A%A4%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:27:56 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8A%A4%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF.html</guid>
+      
+        <description>&lt;p&gt;一般情况下项目会分为开发环境、测试环境、生产环境等，不同的环境有不同的数据库连接（或redis、银行账户等，此处以数据库为例），其中将生产环境的账号密码以明文的形式写入到配置文件中是极其不安全的做法。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>记一次Spring事务失效场景，理解Spring Bean的AOP代理</title>
+      <link>https://www.limxwu.fun/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:24:41 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html</guid>
+      
+        <description>&lt;p&gt;在Spring中，我们经常使用&lt;code&gt;@Transactional&lt;/code&gt;注解开启事务，在这个注解中有个propagation属性用来控制事务的传播，此次失效场景中使用&lt;code&gt;Propagation.NEVER&lt;/code&gt;，Spring中是这样描述的：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence</title>
+      <link>https://www.limxwu.fun/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:22:55 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route&amp;#43;between&amp;#43;ZeroTier&amp;#43;and&amp;#43;Physical&amp;#43;Networks&#34;&gt;zerotier.atlassian.net&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Java多线程下系统时区全局锁对性能的影响</title>
+      <link>https://www.limxwu.fun/posts/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:18:52 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D.html</guid>
+      
+        <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;在考量MySql时间格式时，看到有文章提到高并发下&lt;code&gt;timestamp&lt;/code&gt;调用系统时区转换格式时会因为全局锁导致线程上下文切换致使cpu使用率暴涨。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>HTTP知识点梳理</title>
+      <link>https://www.limxwu.fun/posts/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:17:09 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html</guid>
+      
+        <description>&lt;h2 id=&#34;什么是http&#34;&gt;什么是HTTP&lt;/h2&gt;
+&lt;p&gt;HTTP全称Hypertext Transfer Protocol,意为超文本传输协议，是一个应用层用于出书超媒体文档（如HTML)的协议。它是专为浏览器和Web服务器之间的通信而设计的，但它也可用于其他目的。HTTP遵循典型的BS模型，客户端打开连接发出请求，等待收到相应。HTTP是一个无状态协议，表示服务器不会在两个请求之间保留任何数据（状态）。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Java Spring Service层业务状态的处理</title>
+      <link>https://www.limxwu.fun/posts/java-spring-service%E5%B1%82%E4%B8%9A%E5%8A%A1%E7%8A%B6%E6%80%81%E7%9A%84%E5%A4%84%E7%90%86.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:10:48 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/java-spring-service%E5%B1%82%E4%B8%9A%E5%8A%A1%E7%8A%B6%E6%80%81%E7%9A%84%E5%A4%84%E7%90%86.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;**soluction 1:**return status&lt;/p&gt;
+&lt;p&gt;**soluction 2:**throw exception&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;考虑点如下：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>JAVA发展史</title>
+      <link>https://www.limxwu.fun/posts/java%E5%8F%91%E5%B1%95%E5%8F%B2.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:02:20 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/java%E5%8F%91%E5%B1%95%E5%8F%B2.html</guid>
+      
+        <description>&lt;p&gt;  Java已经走过了二十多年的发展史了，作为一门长期霸占排行榜前三甲的编程语言，它被创造出来之时似乎并没有想到会有今天的辉煌，但回顾历史，Java的出现与兴起并非偶然，只是比别人早走了一步。(.net&amp;mdash;&amp;mdash;&amp;mdash;-&amp;gt;(╯°Д°）╯︵ ┻━━━┻）&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>剑来摘录</title>
+      <link>https://www.limxwu.fun/posts/%E5%89%91%E6%9D%A5%E6%91%98%E5%BD%95.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%89%91%E6%9D%A5%E6%91%98%E5%BD%95.html</guid>
+      
+        <description>&lt;p&gt;本文摘录了一些剑来小说中不错的句子，也许有用，也许没用，总归是些好的期望&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>美国的衰落已经无可挽回了吗？</title>
+      <link>https://www.limxwu.fun/posts/%E7%BE%8E%E5%9B%BD%E7%9A%84%E8%A1%B0%E8%90%BD%E5%B7%B2%E7%BB%8F%E6%97%A0%E5%8F%AF%E6%8C%BD%E5%9B%9E%E4%BA%86%E5%90%97.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E7%BE%8E%E5%9B%BD%E7%9A%84%E8%A1%B0%E8%90%BD%E5%B7%B2%E7%BB%8F%E6%97%A0%E5%8F%AF%E6%8C%BD%E5%9B%9E%E4%BA%86%E5%90%97.html</guid>
+      
+        <description>&lt;p&gt;作者：王五&lt;/p&gt;
+&lt;p&gt;来源：&lt;a href=&#34;https://www.zhihu.com/question/438488725/answer/1677278371&#34;&gt;知乎&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>https://www.limxwu.fun/about.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/about.html</guid>
+      
+        <description>&lt;h3 id=&#34;gday-im-limxwu&#34;&gt;G’day, I’m Limxwu!👋&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Traits&lt;/strong&gt;: I’m a research enthusiast with a love for learning. Technical blogs are my thing, and I’m always up for trying new stuff. I take my work seriously, have an outgoing personality, and get along great with colleagues—always bringing positive vibes to the team.&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

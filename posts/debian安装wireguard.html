@@ -1,0 +1,447 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <meta charset="utf-8" /><title>
+    limxwu
+        |
+        debian安装wireguard
+      
+
+    
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.min.49bfd2dbac6030a3a24fe7cb768d3d0dd9d223458e88f7d6cf5fe7aa806aaa2d.css" integrity="sha256-Sb/S26xgMKOiT&#43;fLdo09DdnSI0WOiPfWz1/nqoBqqi0=" crossorigin="anonymous" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/faviconsfavicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/faviconsapple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/faviconsfavicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/faviconsfavicon-16x16.png" />
+
+  <link rel="canonical" href="https://www.limxwu.fun/posts/debian%E5%AE%89%E8%A3%85wireguard.html" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="debian安装wireguard">
+  <meta name="twitter:description" content="安装wireguard apt install wireguard 设置配置文件 在/etc/wireguard 路径下创建配置文件wg.conf">
+
+
+
+  
+  <meta property="og:url" content="https://www.limxwu.fun/posts/debian%E5%AE%89%E8%A3%85wireguard.html">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="debian安装wireguard">
+  <meta property="og:description" content="安装wireguard apt install wireguard 设置配置文件 在/etc/wireguard 路径下创建配置文件wg.conf">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-28T12:00:00+00:00">
+    <meta property="article:modified_time" content="2025-08-28T12:00:00+00:00">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "debian安装wireguard",
+        "headline": "debian安装wireguard",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch1 id=\u0022安装wireguard\u0022\u003e安装wireguard\u003c\/h1\u003e\n\u003cpre\u003e\u003ccode\u003eapt install wireguard\n\u003c\/code\u003e\u003c\/pre\u003e\n\u003ch1 id=\u0022设置配置文件\u0022\u003e设置配置文件\u003c\/h1\u003e\n\u003cp\u003e在\u003ccode\u003e\/etc\/wireguard\u003c\/code\u003e 路径下创建配置文件wg.conf\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.limxwu.fun\/posts\/debian%E5%AE%89%E8%A3%85wireguard.html"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2025-08-28T12:00:00.00Z",
+        "datePublished": "2025-08-28T12:00:00.00Z",
+        "dateModified": "2025-08-28T12:00:00.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "https://www.limxwu.fun/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/www.limxwu.fun\/faviconsfavicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/www.limxwu.fun\/posts\/debian%E5%AE%89%E8%A3%85wireguard.html",
+        "wordCount" : "245",
+        "genre" : [ ],
+        "keywords" : [ ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>debian安装wireguard</h1>
+      
+      <h1 id="安装wireguard">安装wireguard</h1>
+<pre><code>apt install wireguard
+</code></pre>
+<h1 id="设置配置文件">设置配置文件</h1>
+<p>在<code>/etc/wireguard</code> 路径下创建配置文件wg.conf</p>
+<pre><code>[Interface]
+PrivateKey = ****
+Address = 192.168.xxx.xx/32
+# ListenPort not defined
+DNS = 192.168.xxx.xxx
+
+[Peer]
+PublicKey = ****
+PresharedKey = ****
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = *****:****
+PersistentKeepAlive = 25
+</code></pre>
+<p>启动服务</p>
+<pre><code>wg-quick up wg0
+</code></pre>
+<p>启动服务过程可能由于缺少解析配置文件的依赖导致报错：</p>
+<pre><code>root@debian:/etc/wireguard# wg-quick up wg0
+[#] ip link add wg0 type wireguard
+[#] wg setconf wg0 /dev/fd/63
+[#] ip -4 address add 192.168.***.***/32 dev wg0
+[#] ip link set mtu 1420 up dev wg0
+[#] resolvconf -a wg0 -m 0 -x
+/usr/bin/wg-quick: line 32: resolvconf: command not found
+[#] ip link delete dev wg0
+</code></pre>
+<p>可以安装openresolv解决</p>
+<pre><code>apt install openresolv
+</code></pre>
+<p>创建开机启动</p>
+<pre><code>systemctl enable wg-quick@wg0.service
+</code></pre>
+<h1 id="配置转发">配置转发</h1>
+<pre><code>echo net.ipv4.ip_forward=1&gt;&gt;/etc/sysctl.conf &amp;&amp; sysctl -p
+
+apt update &amp;&amp; apt install iptables
+
+iptables -t nat -A POSTROUTING -j MASQUERADE
+
+apt install iptables-persistent
+</code></pre>
+<p>PS：debian13配置ipv4转发</p>
+<pre><code>echo net.ipv4.ip_forward=1&gt;&gt;/etc/sysctl.conf.d/99-custome.conf &amp;&amp; sysctl --system
+</code></pre>
+
+</div>
+    <div class="post__footer">
+      
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

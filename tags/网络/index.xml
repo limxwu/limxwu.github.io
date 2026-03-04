@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>网络 on 布知花树</title>
+    <link>https://www.limxwu.fun/tags/%E7%BD%91%E7%BB%9C.html</link>
+    <description>Recent content in 网络 on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 08 May 2024 08:50:44 +0000</lastBuildDate><atom:link href="https://www.limxwu.fun/tags/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Openwrt配置BGP</title>
+      <link>https://www.limxwu.fun/posts/openwrt%E9%85%8D%E7%BD%AEbgp.html</link>
+      <pubDate>Wed, 08 May 2024 08:50:44 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/openwrt%E9%85%8D%E7%BD%AEbgp.html</guid>
+      
+        <description>&lt;h2 id=&#34;安装frr&#34;&gt;安装FRR&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;opkg install frr frr-babeld frr-bfdd frr-bgpd frr-eigrpd frr-fabricd frr-isisd frr-ldpd frr-libfrr frr-nhrpd frr-ospf6d frr-ospfd frr-pbrd frr-pimd frr-ripd frr-ripngd frr-staticd frr-vrrpd frr-vtysh frr-watchfrr frr-zebra
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>calico部署BGP模式的高可用k8s集群</title>
+      <link>https://www.limxwu.fun/posts/simpread-how-to-install-kubernetes-cluster-on-debian-12-.html</link>
+      <pubDate>Thu, 14 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/simpread-how-to-install-kubernetes-cluster-on-debian-12-.html</guid>
+      
+        <description>&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>mirotalk-视频会议</title>
+      <link>https://www.limxwu.fun/posts/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE.html</link>
+      <pubDate>Mon, 04 Mar 2024 23:50:02 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/mirotalk-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE.html</guid>
+      
+        <description>&lt;h2 id=&#34;基于webrtc---p2p---简单安全快速的实时视频会议&#34;&gt;基于WebRTC - P2P - 简单、安全、快速的实时视频会议&lt;/h2&gt;
+&lt;iframe src=&#34;https://p2p.mirotalk.com/join/75448RedBrick&#34; width=&#34;100%&#34; height=&#34;800px&#34; frameborder=&#34;0&#34; allowfullscreen=&#34;true&#34; framespacing=&#34;0&#34; style=&#34;display: inline-block&#34; allow=&#34;camera; microphone&#34;&gt;&lt;/iframe&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>simpread-k8s 系列 13-calico 部署 BGP 模式的高可用 k8s 集群 - TinyChen&#39;s Studio - 互联网技术学习工作经验分享</title>
+      <link>https://www.limxwu.fun/posts/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.html</link>
+      <pubDate>Wed, 28 Feb 2024 14:07:49 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/simpread-k8s-%E7%B3%BB%E5%88%97-13-calico-%E9%83%A8%E7%BD%B2-bgp-%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8-k8s-%E9%9B%86%E7%BE%A4---tinychens-studio---%E4%BA%92%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://tinychen.com/20230109-k8s-13-deploy-ha-k8s-with-calico-bgp/#5-3-%E9%85%8D%E7%BD%AEBGP&#34;&gt;tinychen.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>BGP是什么？如何工作的</title>
+      <link>https://www.limxwu.fun/posts/bgp%E6%98%AF%E4%BB%80%E4%B9%88%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84.html</link>
+      <pubDate>Tue, 27 Feb 2024 11:07:29 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/bgp%E6%98%AF%E4%BB%80%E4%B9%88%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://info.support.huawei.com/info-finder/encyclopedia/zh/BGP.html&#34;&gt;info.support.huawei.com&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Debian12 iptables防火墙配置</title>
+      <link>https://www.limxwu.fun/posts/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE.html</link>
+      <pubDate>Thu, 08 Feb 2024 09:48:29 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/debian12-iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE.html</guid>
+      
+        <description>&lt;h2 id=&#34;保存规则&#34;&gt;保存规则&lt;/h2&gt;
+&lt;h3 id=&#34;通过-iptables-persistent-保存&#34;&gt;通过 iptables-persistent 保存&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;netfilter-persistent save
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;通过iptables保存&#34;&gt;通过iptables保存&lt;/h3&gt;
+&lt;p&gt;要稍后保存规则设置，请使用命令&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>常用一句话脚本</title>
+      <link>https://www.limxwu.fun/posts/%E5%B8%B8%E7%94%A8%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%84%9A%E6%9C%AC.html</link>
+      <pubDate>Wed, 07 Feb 2024 09:54:02 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%B8%B8%E7%94%A8%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%84%9A%E6%9C%AC.html</guid>
+      
+        <description>&lt;p&gt;本篇记录了日常开发运维工作过程中经常用到的一些命令&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence</title>
+      <link>https://www.limxwu.fun/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:22:55 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本文由 &lt;a href=&#34;http://ksria.com/simpread/&#34;&gt;简悦 SimpRead&lt;/a&gt; 转码， 原文地址 &lt;a href=&#34;https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route&amp;#43;between&amp;#43;ZeroTier&amp;#43;and&amp;#43;Physical&amp;#43;Networks&#34;&gt;zerotier.atlassian.net&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

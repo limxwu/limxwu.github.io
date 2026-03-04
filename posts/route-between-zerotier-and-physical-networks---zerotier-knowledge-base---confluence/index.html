@@ -1,0 +1,522 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" /><title>
+    
+      
+        Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence |
+      limxwu
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.css" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence/" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/site-feature-image.png">
+  <meta name="twitter:title" content="Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence">
+  <meta name="twitter:description" content="本文由 简悦 SimpRead 转码， 原文地址 zerotier.atlassian.net
+This seems to be the simplest pattern for getting remote access to your LAN. It doesn’t require acces……">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence/">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence">
+  <meta property="og:description" content="本文由 简悦 SimpRead 转码， 原文地址 zerotier.atlassian.net
+This seems to be the simplest pattern for getting remote access to your LAN. It doesn’t require acces……">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-24T00:22:55+00:00">
+    <meta property="article:modified_time" content="2023-08-24T00:22:55+00:00">
+    <meta property="article:tag" content="网络">
+    <meta property="article:tag" content="Openwrt">
+    <meta property="og:image" content="http://localhost:1313/images/site-feature-image.png">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence",
+        "headline": "Route between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003cblockquote\u003e\n\u003cp\u003e本文由 \u003ca href=\u0022http:\/\/ksria.com\/simpread\/\u0022\u003e简悦 SimpRead\u003c\/a\u003e 转码， 原文地址 \u003ca href=\u0022https:\/\/zerotier.atlassian.net\/wiki\/spaces\/SD\/pages\/224395274\/Route\u0026#43;between\u0026#43;ZeroTier\u0026#43;and\u0026#43;Physical\u0026#43;Networks\u0022\u003ezerotier.atlassian.net\u003c\/a\u003e\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003eThis seems to be the simplest pattern for getting remote access to your LAN. It doesn\u0026rsquo;t require acces\u0026hellip;\u0026hellip;\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2023-08-24T00:22:55.00Z",
+        "datePublished": "2023-08-24T00:22:55.00Z",
+        "dateModified": "2023-08-24T00:22:55.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicons\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+        
+        "http://localhost:1313/images/site-feature-image.png"
+
+
+      
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/route-between-zerotier-and-physical-networks---zerotier-knowledge-base---confluence\/",
+        "wordCount" : "388",
+        "genre" : [ 
+      
+      "文章"
+
+    ],
+        "keywords" : [ 
+      
+      "网络"
+
+    
+      
+        ,
+
+      
+      "openwrt"
+
+    ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar wrapper__sidebar--hidden"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/limxwu"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="mailto:limxuw@outlook.com"
+            target="_blank"
+            rel="noopener me"
+            aria-label="e-mail"
+            title="e-mail"
+          >
+            <i class="fa-solid fa-envelope fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main wrapper__main--fullscreen"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Route Between ZeroTier and Physical Networks - ZeroTier Knowledge Base - Confluence</h1>
+      
+      <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/">简悦 SimpRead</a> 转码， 原文地址 <a href="https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route&#43;between&#43;ZeroTier&#43;and&#43;Physical&#43;Networks">zerotier.atlassian.net</a></p>
+</blockquote>
+<p>This seems to be the simplest pattern for getting remote access to your LAN. It doesn&rsquo;t require acces&hellip;&hellip;</p>
+<p>This seems to be the simplest pattern for getting remote access to your LAN. It doesn&rsquo;t require access to the LAN&rsquo;s router or have some of the pitfalls of bridging. This requires a Linux PC or VM, something that runs iptables, on your LAN. A raspberrypi works. This is a <a href="https://en.wikipedia.org/wiki/Network_address_translation" title="https://en.wikipedia.org/wiki/Network_address_translation">NAT/Masquerade</a> setup.</p>
+<p>Possible Disadvantages:</p>
+<ul>
+<li>
+<p>No broadcast/multicast across networks (but the mobile OS&rsquo;s don&rsquo;t allow this anyways).</p>
+</li>
+<li>
+<p>Can&rsquo;t initiate connections <em>from</em> the LAN <em>to</em> an external ZeroTier client.</p>
+</li>
+</ul>
+<h3 id="summary">Summary</h3>
+<ul>
+<li>
+<p>Install ZeroTier</p>
+</li>
+<li>
+<p>Add a managed route to the ZeroTier network (at <a href="http://my.zerotier.com/" title="http://my.zerotier.com">my.zerotier.com</a>)</p>
+</li>
+<li>
+<p>Enable IP Forwarding</p>
+</li>
+<li>
+<p>Configure iptables</p>
+</li>
+</ul>
+<h3 id="required-information">Required information</h3>
+<p>For Example:</p>
+<table data-number-column="false"><tbody><tr><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="671">Info</p></th><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="679">Example</p></th><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="690">Shorthand Name Below</p></th></tr></tbody></table><table data-number-column="false"><tbody><tr><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="671">Info</p></th><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="679">Example</p></th><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="690">Shorthand Name Below</p></th></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="716">ZeroTier Network ID</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="739">d5e04297a19bbd70</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="759">$NETWORK_ID</p></td></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="776">ZeroTier Interface Name</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="803">zt7nnig26</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="816">$ZT_IFACE</p></td></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="831">Physical Interface Name</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="858">eth0</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="866">$PHY_IFACE</p></td></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="882">ZeroTier subnet</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="901">172.27.0.0/16</p></td><td rowspan="1" colspan="1" color=""></td></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="925">Physical subnet</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="944">192.168.100.0/24</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="964">$PHY_SUB</p></td></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="978">ZeroTier IP Address of "Router"</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1013">172.27.0.1</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1027">$ZT_ADDR</p></td></tr></tbody></table>
+<h3 id="install-zerotier">Install ZeroTier</h3>
+<p><a href="https://www.zerotier.com/download/" title="https://www.zerotier.com/download/">https://www.zerotier.com/download/</a></p>
+<p><code>1 2</code> <code>sudo zerotier-cli join $NETWORK_ID sudo zerotier-cli listnetworks</code></p>
+<p>Authorize it at <a href="http://my.zerotier.com/network/$NETWORK_ID" title="http://my.zerotier.com/network/$NETWORK_ID">my.zerotier.com/network/$NETWORK_ID</a></p>
+<p>The <em>listnetworks</em> output has the ZeroTier Interface name under <dev></p>
+<h3 id="configure-the-zerotier-managed-route">Configure the ZeroTier managed route</h3>
+<p>At <a href="http://my.zerotier.com/network/$NETWORK_ID" title="http://my.zerotier.com/network/$NETWORK_ID">my.zerotier.com/network/$NETWORK_ID</a> -&gt; Settings -&gt; Managed Routes</p>
+<p>This adds another route to every device joined to the ZeroTier network.</p>
+<table data-number-column="false"><tbody><tr><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1469">Destination</p></th><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1484">(Via)</p></th></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1495">$PHY_SUB</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1507">$ZT_ADDR</p></td></tr></tbody></table>
+<p>For example:</p>
+<table data-number-column="false"><tbody><tr><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1537">Destination</p></th><th rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1552">(Via)</p></th></tr><tr><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1563">192.168.100.0/23</p></td><td rowspan="1" colspan="1" color=""><p data-renderer-start-pos="1583">172.27.0.1</p></td></tr></tbody></table>
+<p>Configure the destination route as slightly <strong>larger</strong> than the actual physical subnet, here /23 instead of /24 (a smaller number is a bigger subnet in this notation) This makes devices that are on both the physical and the ZeroTier network prefer the physical connection.</p>
+<h3 id="enable-ip-forwarding">Enable IP forwarding</h3>
+<p>This can vary depending on linux distribution. Typically:</p>
+<p>Edit <strong>/etc/sysctl.conf</strong> to uncomment <strong>net.ipv4.ip_forward</strong>. This enables forwarding at boot.</p>
+<p>To enable it now</p>
+<p><code>1</code> <code>sudo sysctl -w net.ipv4.ip_forward=1</code></p>
+<h3 id="configure-iptables">Configure iptables</h3>
+<p>Assign some shell variables (personalize these)</p>
+<p><code>1</code> <code>PHY_IFACE=eth0; ZT_IFACE=zt7nnig26</code></p>
+<p>Add rules to iptables</p>
+<p><code>1 2 3</code> <code>sudo iptables -t nat -A POSTROUTING -o $PHY_IFACE -j MASQUERADE sudo iptables -A FORWARD -i $PHY_IFACE -o $ZT_IFACE -m state --state RELATED,ESTABLISHED -j ACCEPT sudo iptables -A FORWARD -i $ZT_IFACE -o $PHY_IFACE -j ACCEPT</code></p>
+<p>Save iptables rules for next boot</p>
+<p><code>1 2</code> <code>sudo apt install iptables-persistent sudo bash -c iptables-save &gt; /etc/iptables/rules.v4</code></p>
+<h3 id="test">Test!</h3>
+<ul>
+<li>
+<p>Turn off wifi on your phone</p>
+</li>
+<li>
+<p>Join it to the zerotier network, authorize it</p>
+</li>
+<li>
+<p>Try to access something on the physical LAN</p>
+</li>
+</ul>
+
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/%E6%96%87%E7%AB%A0/">文章</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/%E7%BD%91%E7%BB%9C/">网络</a><a class="tag" href="/tags/openwrt/">openwrt</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

@@ -1,0 +1,551 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" /><title>
+    
+      
+        Java多线程下系统时区全局锁对性能的影响 |
+      limxwu
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.css" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/site-feature-image.png">
+  <meta name="twitter:title" content="Java多线程下系统时区全局锁对性能的影响">
+  <meta name="twitter:description" content="起因 在考量MySql时间格式时，看到有文章提到高并发下timestamp调用系统时区转换格式时会因为全局锁导致线程上下文切换致使cpu使用率暴涨。
+测试过程 在查询数据库时，MyBatis或者JPA等框架大都会将timestamp转换为Java中对应的时间戳格式（Timestamp或者Instant），在这一过程中并不存在时区转换的问题，而在业务代码尤其是返回前端数据时，经常需要将时间戳转换为具体的时间字符串，此时才是应该探究的全局锁对性能影响的关键点。
+设计两个对照组：
+是否使用系统时区对性能的影响 不同并发量下对性能影响 使用系统时区的Callable：
+private static final Callable&lt;Long&gt; useSystemZoneCallable = () -&gt; { long startTime = System.currentTimeMillis(); for (int k = 0; k &lt; MAX_EX_NUM; k&#43;&#43;) { ZoneId.systemDefault().toString(); } return System.currentTimeMillis() - startTime; }; 不使用系统时区的Callable:">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="Java多线程下系统时区全局锁对性能的影响">
+  <meta property="og:description" content="起因 在考量MySql时间格式时，看到有文章提到高并发下timestamp调用系统时区转换格式时会因为全局锁导致线程上下文切换致使cpu使用率暴涨。
+测试过程 在查询数据库时，MyBatis或者JPA等框架大都会将timestamp转换为Java中对应的时间戳格式（Timestamp或者Instant），在这一过程中并不存在时区转换的问题，而在业务代码尤其是返回前端数据时，经常需要将时间戳转换为具体的时间字符串，此时才是应该探究的全局锁对性能影响的关键点。
+设计两个对照组：
+是否使用系统时区对性能的影响 不同并发量下对性能影响 使用系统时区的Callable：
+private static final Callable&lt;Long&gt; useSystemZoneCallable = () -&gt; { long startTime = System.currentTimeMillis(); for (int k = 0; k &lt; MAX_EX_NUM; k&#43;&#43;) { ZoneId.systemDefault().toString(); } return System.currentTimeMillis() - startTime; }; 不使用系统时区的Callable:">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-24T00:18:52+00:00">
+    <meta property="article:modified_time" content="2023-08-24T00:18:52+00:00">
+    <meta property="article:tag" content="Java">
+    <meta property="og:image" content="http://localhost:1313/images/site-feature-image.png">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Java多线程下系统时区全局锁对性能的影响",
+        "headline": "Java多线程下系统时区全局锁对性能的影响",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch2 id=\u0022起因\u0022\u003e起因\u003c\/h2\u003e\n\u003cp\u003e在考量MySql时间格式时，看到有文章提到高并发下\u003ccode\u003etimestamp\u003c\/code\u003e调用系统时区转换格式时会因为全局锁导致线程上下文切换致使cpu使用率暴涨。\u003c\/p\u003e\n\u003ch2 id=\u0022测试过程\u0022\u003e测试过程\u003c\/h2\u003e\n\u003cp\u003e在查询数据库时，MyBatis或者JPA等框架大都会将\u003ccode\u003etimestamp\u003c\/code\u003e转换为Java中对应的时间戳格式（Timestamp或者Instant），在这一过程中并不存在时区转换的问题，而在业务代码尤其是返回前端数据时，经常需要将时间戳转换为具体的时间字符串，此时才是应该探究的全局锁对性能影响的关键点。\u003c\/p\u003e\n\u003cp\u003e设计两个对照组：\u003c\/p\u003e\n\u003col\u003e\n\u003cli\u003e是否使用系统时区对性能的影响\u003c\/li\u003e\n\u003cli\u003e不同并发量下对性能影响\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003cp\u003e使用系统时区的Callable：\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 class=\u0022chroma\u0022\u003e\u003ccode class=\u0022language-java\u0022 data-lang=\u0022java\u0022\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kd\u0022\u003eprivate\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kd\u0022\u003estatic\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kd\u0022\u003efinal\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eCallable\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026lt;\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eLong\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026gt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003euseSystemZoneCallable\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e=\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e()\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e-\u0026gt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e{\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003elong\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003estartTime\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e=\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eSystem\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e.\u003c\/span\u003e\u003cspan class=\u0022na\u0022\u003ecurrentTimeMillis\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e();\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022k\u0022\u003efor\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eint\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003ek\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e=\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e0\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003ek\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026lt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eMAX_EX_NUM\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003ek\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u002b\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e{\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e            \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eZoneId\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e.\u003c\/span\u003e\u003cspan class=\u0022na\u0022\u003esystemDefault\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e().\u003c\/span\u003e\u003cspan class=\u0022na\u0022\u003etoString\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e();\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e}\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022k\u0022\u003ereturn\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eSystem\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e.\u003c\/span\u003e\u003cspan class=\u0022na\u0022\u003ecurrentTimeMillis\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e()\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e-\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003estartTime\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e};\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003cp\u003e不使用系统时区的Callable:\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2023-08-24T00:18:52.00Z",
+        "datePublished": "2023-08-24T00:18:52.00Z",
+        "dateModified": "2023-08-24T00:18:52.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicons\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+        
+        "http://localhost:1313/images/site-feature-image.png"
+
+
+      
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D\/",
+        "wordCount" : "450",
+        "genre" : [ 
+      
+      "文章"
+
+    ],
+        "keywords" : [ 
+      
+      "java"
+
+    ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar wrapper__sidebar--hidden"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/limxwu"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="mailto:limxuw@outlook.com"
+            target="_blank"
+            rel="noopener me"
+            aria-label="e-mail"
+            title="e-mail"
+          >
+            <i class="fa-solid fa-envelope fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main wrapper__main--fullscreen"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Java多线程下系统时区全局锁对性能的影响</h1>
+      
+      <h2 id="起因">起因</h2>
+<p>在考量MySql时间格式时，看到有文章提到高并发下<code>timestamp</code>调用系统时区转换格式时会因为全局锁导致线程上下文切换致使cpu使用率暴涨。</p>
+<h2 id="测试过程">测试过程</h2>
+<p>在查询数据库时，MyBatis或者JPA等框架大都会将<code>timestamp</code>转换为Java中对应的时间戳格式（Timestamp或者Instant），在这一过程中并不存在时区转换的问题，而在业务代码尤其是返回前端数据时，经常需要将时间戳转换为具体的时间字符串，此时才是应该探究的全局锁对性能影响的关键点。</p>
+<p>设计两个对照组：</p>
+<ol>
+<li>是否使用系统时区对性能的影响</li>
+<li>不同并发量下对性能影响</li>
+</ol>
+<p>使用系统时区的Callable：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Callable</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span><span class="w"> </span><span class="n">useSystemZoneCallable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">startTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">MAX_EX_NUM</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ZoneId</span><span class="p">.</span><span class="na">systemDefault</span><span class="p">().</span><span class="na">toString</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">startTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span></code></pre></div><p>不使用系统时区的Callable:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Callable</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span><span class="w"> </span><span class="n">notUseSystemZoneCallable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">startTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">MAX_EX_NUM</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ZoneOffset</span><span class="p">.</span><span class="na">UTC</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">startTime</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span></code></pre></div><p>其中<code>MAX_EX_NUM</code>设置为1000000000</p>
+<p>开启不同数量的线程执行上述Callable，并统计每个线程执行时长，计算平均值。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w"> </span><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 使用系统时区
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param maxThreadNum
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @throws InterruptedException
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @throws ExecutionException
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">useSystemZone</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">maxThreadNum</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">InterruptedException</span><span class="p">,</span><span class="w"> </span><span class="n">ExecutionException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">CountDownLatchFuture</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;[]</span><span class="w"> </span><span class="n">futureTasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CountDownLatchFuture</span><span class="o">[</span><span class="n">maxThreadNum</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">CountDownLatch</span><span class="w"> </span><span class="n">countDownLatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CountDownLatch</span><span class="p">(</span><span class="n">maxThreadNum</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">maxThreadNum</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">futureTasks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CountDownLatchFuture</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">useSystemZoneCallable</span><span class="p">,</span><span class="w"> </span><span class="n">countDownLatch</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="n">futureTasks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">).</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">countDownLatch</span><span class="p">.</span><span class="na">await</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">totalSpendTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">FutureTask</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span><span class="w"> </span><span class="n">futureTask</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">futureTasks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">totalSpendTime</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">futureTask</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&#34;ThreadNum: %s,\tuseSystemZone method take %s milliseconds(average).\n&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">maxThreadNum</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">(</span><span class="n">totalSpendTime</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">maxThreadNum</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>不使用系统时区的执行方法同上。</p>
+<blockquote>
+<p><a href="https://github.com/NextWWParty/JavaLesson/blob/master/Practice/src/main/java/pers/limx/practice/thread/SystemTimeZone.java">源码地址</a></p>
+</blockquote>
+<h2 id="测试结果">测试结果</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ThreadNum: 1,	useSystemZone method take 1024 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 2,	useSystemZone method take 1021 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 3,	useSystemZone method take 655 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 4,	useSystemZone method take 735 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 5,	useSystemZone method take 806 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 6,	useSystemZone method take 837 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 7,	useSystemZone method take 880 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 8,	useSystemZone method take 916 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 9,	useSystemZone method take 969 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 10,	useSystemZone method take 1020 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 11,	useSystemZone method take 1096 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 12,	useSystemZone method take 1195 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 13,	useSystemZone method take 1239 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 14,	useSystemZone method take 1334 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 15,	useSystemZone method take 1374 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 16,	useSystemZone method take 1445 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 17,	useSystemZone method take 1559 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 18,	useSystemZone method take 1640 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 19,	useSystemZone method take 1665 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 20,	useSystemZone method take 1712 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 21,	useSystemZone method take 1760 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 22,	useSystemZone method take 1849 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 23,	useSystemZone method take 2079 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 24,	useSystemZone method take 2247 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 1,	notUseSystemZone method take 4 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 2,	notUseSystemZone method take 4 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 3,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 4,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 5,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 6,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 7,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 8,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 9,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 10,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 11,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 12,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 13,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 14,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 15,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 16,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 17,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ThreadNum: 18,	notUseSystemZone method take 0 milliseconds(average).
+</span></span><span class="line"><span class="cl">ake 0 milliseconds(average).
+</span></span></code></pre></div><h2 id="结论">结论</h2>
+<p>在高并发环境下，时间戳调用系统时区时，由于全局锁的存在会导致大量线程的上下文切换，容易造成CPU满载的情况。所以在使用时间戳格式时，在情况允许的前提下最好传递给外部系统特定时区（UTC,东八区&hellip;.)的ISO-8601时间格式，而不是系统默认时区的时间格式。</p>
+
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/%E6%96%87%E7%AB%A0/">文章</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/java/">java</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

@@ -1,0 +1,449 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <meta charset="utf-8" /><title>
+    limxwu
+        |
+        HTTP知识点梳理
+      
+
+    
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.min.49bfd2dbac6030a3a24fe7cb768d3d0dd9d223458e88f7d6cf5fe7aa806aaa2d.css" integrity="sha256-Sb/S26xgMKOiT&#43;fLdo09DdnSI0WOiPfWz1/nqoBqqi0=" crossorigin="anonymous" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/faviconsfavicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/faviconsapple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/faviconsfavicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/faviconsfavicon-16x16.png" />
+
+  <link rel="canonical" href="https://www.limxwu.fun/posts/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HTTP知识点梳理">
+  <meta name="twitter:description" content="什么是HTTP HTTP全称Hypertext Transfer Protocol,意为超文本传输协议，是一个应用层用于出书超媒体文档（如HTML)的协议。它是专为浏览器和Web服务器之间的通信而设计的，但它也可用于其他目的。HTTP遵循典型的BS模型，客户端打开连接发出请求，等待收到相应。HTTP是一个无状态协议，表示服务器不会在两个请求之间保留任何数据（状态）。">
+
+
+
+  
+  <meta property="og:url" content="https://www.limxwu.fun/posts/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="HTTP知识点梳理">
+  <meta property="og:description" content="什么是HTTP HTTP全称Hypertext Transfer Protocol,意为超文本传输协议，是一个应用层用于出书超媒体文档（如HTML)的协议。它是专为浏览器和Web服务器之间的通信而设计的，但它也可用于其他目的。HTTP遵循典型的BS模型，客户端打开连接发出请求，等待收到相应。HTTP是一个无状态协议，表示服务器不会在两个请求之间保留任何数据（状态）。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-24T00:17:09+00:00">
+    <meta property="article:modified_time" content="2023-08-24T00:17:09+00:00">
+    <meta property="article:tag" content="Web">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "HTTP知识点梳理",
+        "headline": "HTTP知识点梳理",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch2 id=\u0022什么是http\u0022\u003e什么是HTTP\u003c\/h2\u003e\n\u003cp\u003eHTTP全称Hypertext Transfer Protocol,意为超文本传输协议，是一个应用层用于出书超媒体文档（如HTML)的协议。它是专为浏览器和Web服务器之间的通信而设计的，但它也可用于其他目的。HTTP遵循典型的BS模型，客户端打开连接发出请求，等待收到相应。HTTP是一个无状态协议，表示服务器不会在两个请求之间保留任何数据（状态）。\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.limxwu.fun\/posts\/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2023-08-24T00:17:09.00Z",
+        "datePublished": "2023-08-24T00:17:09.00Z",
+        "dateModified": "2023-08-24T00:17:09.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "https://www.limxwu.fun/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/www.limxwu.fun\/faviconsfavicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/www.limxwu.fun\/posts\/http%E7%9F%A5%E8%AF%86%E7%82%B9%E6%A2%B3%E7%90%86.html",
+        "wordCount" : "1051",
+        "genre" : [ 
+      
+      "文章"
+
+    ],
+        "keywords" : [ 
+      
+      "web"
+
+    ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>HTTP知识点梳理</h1>
+      
+      <h2 id="什么是http">什么是HTTP</h2>
+<p>HTTP全称Hypertext Transfer Protocol,意为超文本传输协议，是一个应用层用于出书超媒体文档（如HTML)的协议。它是专为浏览器和Web服务器之间的通信而设计的，但它也可用于其他目的。HTTP遵循典型的BS模型，客户端打开连接发出请求，等待收到相应。HTTP是一个无状态协议，表示服务器不会在两个请求之间保留任何数据（状态）。</p>
+<h2 id="http消息的组成">HTTP消息的组成</h2>
+<h3 id="请求">请求</h3>
+<p>URL(统一资源定位器)</p>
+<p>请求方法:GET、POST、PUT、PATCH、DELETE、OPTIONS、HEAD&hellip;.</p>
+<p>请求头：Accept、Accept-Encoding、Connection、Authorization、User-Agent、Cookie、Content-Type（application/json、multipart/form-data、application/x-www-from-urlencoded、application/octet-stream&hellip;.）、Content-Length、Refer、Host&hellip;.</p>
+<p>请求体（GET通常没有）</p>
+<h3 id="响应">响应</h3>
+<p>响应码：消息-1xx，成功-2xx,重定向-3xx,请求错误-4xx,服务器错误-5xx</p>
+<p>响应头：Content-Type、Content-Length、Content-Encoding、cookie、Cache-Control&hellip;</p>
+<p>响应体</p>
+<h2 id="版本变化">版本变化</h2>
+<p>HTTP1.0:短链接</p>
+<p>HTTP1.1:默认长连接，一个TCP连接可以发起多个HTTP请求；断点续传，请求头添加range</p>
+<p>HTTP2.0：</p>
+<ul>
+<li>二进制分帧，采用二进制传输（之前都是传输文本），编排后用帧传输</li>
+<li>首部压缩，将Header压缩，对于出现过Header传输索引号</li>
+<li>多路复用</li>
+<li>优先级控制</li>
+<li>服务器推送，提前将资源推送到客户端</li>
+</ul>
+<p>HTTP3.0:传输层由TCP改为UDP=&gt;线头阻塞问题彻底解决；移动网络更灵活</p>
+<h2 id="https">HTTPS</h2>
+<p>HTTP+SSL/TLS</p>
+<p>在原有的HTTP基础上添加了加密层SSL/TLS</p>
+<p>SSL层的建立：</p>
+<p>1.验证证书有效性</p>
+<p>2.利用SSL证书中的公钥，由非对称加密协商出对称加密的算法和主密钥</p>
+<p><strong>怎么保证保证服务器给客户端下发的公钥是真正的公钥，而不是中间人伪造的公钥呢？</strong></p>
+<p><strong>证书如何安全传输，被掉包了怎么办？</strong></p>
+<p>SSL证书包含：颁发者（一般为CA)、使用者（服务器域名）、有效期、服务器公钥、签名算法、签名摘要</p>
+<p>签名摘要通过对证书内容HASH后得到摘要，再由CA私钥签名，此签名摘要可由CA公钥结合证书内容验证签名是否有篡改。</p>
+
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/%E6%96%87%E7%AB%A0/">文章</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/web/">web</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

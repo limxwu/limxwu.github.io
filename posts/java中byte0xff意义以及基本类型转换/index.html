@@ -1,0 +1,578 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="zh-cn"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" /><title>
+    
+      
+        java基本类型转换 |
+      limxwu
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.157.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="limxwu" />
+  <meta
+    name="description"
+    content="春风十里，全在梦里"
+  />
+  
+  
+        <link rel="stylesheet" href="/css/anatole.css" />
+      
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.10cb17328b3207590ce3d89fb482e7cd6937d8138cef2059c69cabd65ab7d6c6.css"
+    integrity="sha256-EMsXMosyB1kM49iftILnzWk32BOM7yBZxpyr1lq31sY="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.7aa4d559d5fadcfed666b5679be54d0dbbcf6a0542742319765b253d2797cc44.css"
+    integrity="sha256-eqTVWdX63P7WZrVnm&#43;VNDbvPagVCdCMZdlslPSeXzEQ="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.a699c3ab02229020e2d51dfe6c9a4cc556fd7781edbc166e2af9d0db9d5c66ce.css"
+    integrity="sha256-ppnDqwIikCDi1R3&#43;bJpMxVb9d4HtvBZuKvnQ251cZs4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.1d88b60c86c4bb253fa4d4c085d27f7ee1f6eca544f7b50b227a2e63fbcfbaaa.css"
+    integrity="sha256-HYi2DIbEuyU/pNTAhdJ/fuH27KVE97ULInouY/vPuqo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" />
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.8724ddf9268dee451060f191961647573c7f592fbccc6d858746236b3f915813.js"
+      integrity="sha256-hyTd&#43;SaN7kUQYPGRlhZHVzx/WS&#43;8zG2Fh0Yjaz&#43;RWBM="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/images/site-feature-image.png">
+  <meta name="twitter:title" content="java基本类型转换">
+  <meta name="twitter:description" content="引言： 读JDK17源码中，发现Bits类中有这样一段代码：
+static boolean getBoolean(byte[] b, int off) { return b[off] != 0; } static char getChar(byte[] b, int off) { return (char) ((b[off &#43; 1] &amp; 0xFF) &#43; (b[off] &lt;&lt; 8)); } static short getShort(byte[] b, int off) { return (short) ((b[off &#43; 1] &amp; 0xFF) &#43; (b[off] &lt;&lt; 8)); } static int getInt(byte[] b, int off) { return ((b[off &#43; 3] &amp; 0xFF) ) &#43; ((b[off &#43; 2] &amp; 0xFF) &lt;&lt; 8) &#43; ((b[off &#43; 1] &amp; 0xFF) &lt;&lt; 16) &#43; ((b[off ] ) &lt;&lt; 24); } 这几个方法作用都是从byte[]数组的偏移量off中取出对应类型的基础数据类型，除了最高位字节其他字节都&amp;0xFF后按照大端模式进行移位操作，但是byte长度为一个字节，&amp;0xFF后仍然为其本身，其中的意义是什么呢？">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+  <meta property="og:site_name" content="布知花树">
+  <meta property="og:title" content="java基本类型转换">
+  <meta property="og:description" content="引言： 读JDK17源码中，发现Bits类中有这样一段代码：
+static boolean getBoolean(byte[] b, int off) { return b[off] != 0; } static char getChar(byte[] b, int off) { return (char) ((b[off &#43; 1] &amp; 0xFF) &#43; (b[off] &lt;&lt; 8)); } static short getShort(byte[] b, int off) { return (short) ((b[off &#43; 1] &amp; 0xFF) &#43; (b[off] &lt;&lt; 8)); } static int getInt(byte[] b, int off) { return ((b[off &#43; 3] &amp; 0xFF) ) &#43; ((b[off &#43; 2] &amp; 0xFF) &lt;&lt; 8) &#43; ((b[off &#43; 1] &amp; 0xFF) &lt;&lt; 16) &#43; ((b[off ] ) &lt;&lt; 24); } 这几个方法作用都是从byte[]数组的偏移量off中取出对应类型的基础数据类型，除了最高位字节其他字节都&amp;0xFF后按照大端模式进行移位操作，但是byte长度为一个字节，&amp;0xFF后仍然为其本身，其中的意义是什么呢？">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-13T12:00:00+00:00">
+    <meta property="article:modified_time" content="2025-08-13T12:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/images/site-feature-image.png">
+
+
+
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "java基本类型转换",
+        "headline": "java基本类型转换",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch1 id=\u0022引言\u0022\u003e引言：\u003c\/h1\u003e\n\u003cp\u003e读JDK17源码中，发现Bits类中有这样一段代码：\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 class=\u0022chroma\u0022\u003e\u003ccode class=\u0022language-java\u0022 data-lang=\u0022java\u0022\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022kd\u0022\u003estatic\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eboolean\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022nf\u0022\u003egetBoolean\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003ebyte\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e,\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eint\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e{\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022k\u0022\u003ereturn\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e!=\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e0\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e}\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022kd\u0022\u003estatic\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003echar\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022nf\u0022\u003egetChar\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003ebyte\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e,\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eint\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e{\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022k\u0022\u003ereturn\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003echar\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e((\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e1\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026amp;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e0xFF\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e                       \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026lt;\u0026lt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e8\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e));\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e}\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022kd\u0022\u003estatic\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eshort\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022nf\u0022\u003egetShort\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003ebyte\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e,\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eint\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e{\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022k\u0022\u003ereturn\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eshort\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e((\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e1\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026amp;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e0xFF\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e                        \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026lt;\u0026lt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e8\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e));\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e}\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022kd\u0022\u003estatic\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eint\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022nf\u0022\u003egetInt\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e(\u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003ebyte\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e,\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022kt\u0022\u003eint\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e{\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e        \u003c\/span\u003e\u003cspan class=\u0022k\u0022\u003ereturn\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e((\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e3\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026amp;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e0xFF\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e      \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e               \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e((\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e2\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026amp;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e0xFF\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026lt;\u0026lt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e  \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e8\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e               \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e((\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e1\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026amp;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e0xFF\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026lt;\u0026lt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e16\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u002b\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e               \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e((\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eb\u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e[\u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003eoff\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e]\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e       \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e)\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022o\u0022\u003e\u0026lt;\u0026lt;\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e \u003c\/span\u003e\u003cspan class=\u0022n\u0022\u003e24\u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e);\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003cspan class=\u0022line\u0022\u003e\u003cspan class=\u0022cl\u0022\u003e\u003cspan class=\u0022w\u0022\u003e    \u003c\/span\u003e\u003cspan class=\u0022p\u0022\u003e}\u003c\/span\u003e\u003cspan class=\u0022w\u0022\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003cp\u003e这几个方法作用都是从byte[]数组的偏移量\u003ccode\u003eoff\u003c\/code\u003e中取出对应类型的基础数据类型，除了最高位字节其他字节都\u003ccode\u003e\u0026amp;0xFF\u003c\/code\u003e后按照大端模式进行移位操作，但是\u003ccode\u003ebyte\u003c\/code\u003e长度为一个字节，\u003ccode\u003e\u0026amp;0xFF\u003c\/code\u003e后仍然为其本身，其中的意义是什么呢？\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "license": "",
+        
+          
+          "copyrightYear": "2023",
+        
+        "inLanguage": "zh-cn",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "limxwu"
+        },
+        "dateCreated": "2025-08-13T12:00:00.00Z",
+        "datePublished": "2025-08-13T12:00:00.00Z",
+        "dateModified": "2025-08-13T12:00:00.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "limxwu",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicons\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+        
+        "http://localhost:1313/images/site-feature-image.png"
+
+
+      
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/java%E4%B8%ADbyte0xff%E6%84%8F%E4%B9%89%E4%BB%A5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2\/",
+        "wordCount" : "313",
+        "genre" : [ ],
+        "keywords" : [ ]
+    }
+  </script>
+
+
+
+
+  
+  
+  
+    
+          <link
+            rel="stylesheet"
+            href="/css/katex.css"
+            integrity="sha512-maURQ02UpG4C1nKJZ35oPB7ctbzpZYQt53bYv8zQCfVFjIZMqcKUjQ5W8O&#43;ls3ksH/FA4xmnlOHkJAni3OwYEg=="
+            crossorigin="anonymous"
+          />
+        
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar wrapper__sidebar--hidden"
+        
+      ><div class="sidebar">
+  <div
+    class="sidebar__content 
+      animated fadeInDown
+    "
+  >
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">布知花树</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>春风十里，全在梦里</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/limxwu"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="mailto:limxuw@outlook.com"
+            target="_blank"
+            rel="noopener me"
+            aria-label="e-mail"
+            title="e-mail"
+          >
+            <i class="fa-solid fa-envelope fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main wrapper__main--fullscreen"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >首页</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >归档</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/monment/"
+              
+              title=""
+              >瞬间</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >关于我</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Java基本类型转换</h1>
+      
+      <h1 id="引言">引言：</h1>
+<p>读JDK17源码中，发现Bits类中有这样一段代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">getBoolean</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">off</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="nf">getChar</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">off</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                       </span><span class="p">(</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">8</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="nf">getShort</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">off</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">short</span><span class="p">)</span><span class="w"> </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="p">(</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">8</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getInt</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">off</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">)</span><span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">               </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w">  </span><span class="n">8</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">               </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">16</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">               </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w">    </span><span class="o">]</span><span class="w">       </span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">24</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>这几个方法作用都是从byte[]数组的偏移量<code>off</code>中取出对应类型的基础数据类型，除了最高位字节其他字节都<code>&amp;0xFF</code>后按照大端模式进行移位操作，但是<code>byte</code>长度为一个字节，<code>&amp;0xFF</code>后仍然为其本身，其中的意义是什么呢？</p>
+<h1 id="byte0xff意义">byte&amp;0xFF意义</h1>
+<p>写了个Demo进行对比：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getInt</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">off</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">8</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">16</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">24</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getInt2</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">off</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">3</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">2</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">8</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">16</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">((</span><span class="n">b</span><span class="o">[</span><span class="n">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">0</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">24</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">bs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="p">{</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">55</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">getInt</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">getInt2</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span><span class="w"> </span><span class="n">0</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="m">16909257</span>
+</span></span><span class="line"><span class="cl"><span class="m">16909001</span>
+</span></span></code></pre></div><p>输出结果不一样😂再去jdk22看，这个类被移除掉了，替换成了native方法VarHandle.get<br>
+简化逻辑为下面这段代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">byte</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">55</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xFF</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">i1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">i2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>输出结果:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="m">201</span>
+</span></span><span class="line"><span class="cl">-55
+</span></span></code></pre></div><p>这块结果不一样，涉及到位操作我们需要将<code>-55</code>转换成机器码</p>
+<pre><code>原码 1011 0111
+反码 1100 1000
+补码 1100 1001
+</code></pre>
+<p><code>int i2 = (int) b</code>强制转换byte为int时，负数前面会自动补1，正数补0</p>
+<pre><code>补码 1111 1111 1111 1111 1111 1111 1100 1001
+反码 1111 1111 1111 1111 1111 1111 1100 1000
+原码 1000 0000 0000 0000 0000 0000 0011 0111
+</code></pre>
+<p>由原码可知强制转换后仍为-55<br>
+<code>int i1 = b &amp; 0xFF</code>首先二元运算&amp;会将结果提升为int，-55的补码<code>1111 1111 1111 1111 1111 1111 1100 1001</code>位与0xFF，结果为<code>0000 0000 0000 0000 0000 0000 1100 1001</code>，转换成值为201</p>
+<p>byte默认为singed，范围</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>−</mo><mn>127</mn><mo separator="true">,</mo><mn>128</mn></mrow><annotation encoding="application/x-tex">-127,128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">−</span><span class="mord">127</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">128</span></span></span></span></span><p>由此可知此处的byte&amp;0xFF其实是去符号取unsinged的操作。</p>
+<h1 id="基本类型转换">基本类型转换</h1>
+<p>如果在二元操作中，不存在double，float，long的话，那么byte、short、char类型都会被转化为int类型，具体表现为小容器向大容器转换</p>
+<p>graph LR<br>
+byte(byte)–&gt;short(short)–&gt;int(int)–&gt;long(long)–&gt;float(float)–&gt;double(double)<br>
+char(char)–&gt;int</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>基本数据类型</td>
+          <td>字节长度</td>
+          <td>位数</td>
+      </tr>
+      <tr>
+          <td>byte</td>
+          <td>1</td>
+          <td>8</td>
+      </tr>
+      <tr>
+          <td>short</td>
+          <td>2</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>char</td>
+          <td>2</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>int</td>
+          <td>4</td>
+          <td>32</td>
+      </tr>
+      <tr>
+          <td>long</td>
+          <td>8</td>
+          <td>64</td>
+      </tr>
+      <tr>
+          <td>float</td>
+          <td>4</td>
+          <td>32</td>
+      </tr>
+      <tr>
+          <td>double</td>
+          <td>8</td>
+          <td>64</td>
+      </tr>
+  </tbody>
+</table>
+<p>其中需要明确的是float虽然4个字节，但是表示的范围比long大，只是long转float可能会有精度丢失的问题</p>
+<p>float的32位，可以分为三段来看，第一段占第一位，表示正负；第二段第2-9位表示指数；第三段第10-32位表示尾数</p>
+<ol>
+<li>
+<p>在10进制中123.456可以被表示成1.23456 × 102 ，在二进制中10100.110可以被表示成1.0100110 × 24</p>
+</li>
+<li>
+<p>浮点数有精度，超过精度的数无法被表示，如0.0000000000000001就是精确到小数点后x位。</p>
+</li>
+<li>
+<p>IEEE浮点数有三个部分组成：符号位（S），指数位（E），尾部（M），任何数都能以二进制表示以为S_1.M_2E</p>
+</li>
+</ol>
+
+</div>
+    <div class="post__footer">
+      
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul
+    class="footer__list 
+      animated fadeInDown
+    "
+  >
+    <li class="footer__item">
+      &copy;
+      
+        2023-2026
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.9531b4a2217a70c5a1fce89c1f81c9ebbdd586708fcd4130b417320c7230c8d6.js"
+    integrity="sha256-lTG0oiF6cMWh/OicH4HJ673VhnCPzUEwtBcyDHIwyNY="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on 布知花树</title>
+    <link>https://www.limxwu.fun/tags/java.html</link>
+    <description>Recent content in Java on 布知花树</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 22 Feb 2024 14:21:06 +0000</lastBuildDate><atom:link href="https://www.limxwu.fun/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring配置文件优先级</title>
+      <link>https://www.limxwu.fun/posts/spring%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7.html</link>
+      <pubDate>Thu, 22 Feb 2024 14:21:06 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/spring%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7.html</guid>
+      
+        <description>&lt;h1 id=&#34;springboot配置文件优先级&#34;&gt;SpringBoot配置文件优先级&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config&#34;&gt;3.2.2官方文档：&lt;/a&gt;Spring Boot 允许您外部化您的配置，以便您可以在不同的环境中使用相同的应用程序代码。您可以使用各种外部配置源，包括 Java 属性文件、YAML 文件、环境变量和命令行参数。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>如何保护代码中的敏感信息</title>
+      <link>https://www.limxwu.fun/posts/%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8A%A4%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:27:56 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8A%A4%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF.html</guid>
+      
+        <description>&lt;p&gt;一般情况下项目会分为开发环境、测试环境、生产环境等，不同的环境有不同的数据库连接（或redis、银行账户等，此处以数据库为例），其中将生产环境的账号密码以明文的形式写入到配置文件中是极其不安全的做法。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>记一次Spring事务失效场景，理解Spring Bean的AOP代理</title>
+      <link>https://www.limxwu.fun/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:24:41 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1spring%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3spring-bean%E7%9A%84aop%E4%BB%A3%E7%90%86.html</guid>
+      
+        <description>&lt;p&gt;在Spring中，我们经常使用&lt;code&gt;@Transactional&lt;/code&gt;注解开启事务，在这个注解中有个propagation属性用来控制事务的传播，此次失效场景中使用&lt;code&gt;Propagation.NEVER&lt;/code&gt;，Spring中是这样描述的：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Java多线程下系统时区全局锁对性能的影响</title>
+      <link>https://www.limxwu.fun/posts/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:18:52 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E5%85%A8%E5%B1%80%E9%94%81%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D.html</guid>
+      
+        <description>&lt;h2 id=&#34;起因&#34;&gt;起因&lt;/h2&gt;
+&lt;p&gt;在考量MySql时间格式时，看到有文章提到高并发下&lt;code&gt;timestamp&lt;/code&gt;调用系统时区转换格式时会因为全局锁导致线程上下文切换致使cpu使用率暴涨。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Java Spring Service层业务状态的处理</title>
+      <link>https://www.limxwu.fun/posts/java-spring-service%E5%B1%82%E4%B8%9A%E5%8A%A1%E7%8A%B6%E6%80%81%E7%9A%84%E5%A4%84%E7%90%86.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:10:48 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/java-spring-service%E5%B1%82%E4%B8%9A%E5%8A%A1%E7%8A%B6%E6%80%81%E7%9A%84%E5%A4%84%E7%90%86.html</guid>
+      
+        <description>&lt;blockquote&gt;
+&lt;p&gt;**soluction 1:**return status&lt;/p&gt;
+&lt;p&gt;**soluction 2:**throw exception&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;考虑点如下：&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>JAVA发展史</title>
+      <link>https://www.limxwu.fun/posts/java%E5%8F%91%E5%B1%95%E5%8F%B2.html</link>
+      <pubDate>Thu, 24 Aug 2023 00:02:20 +0000</pubDate>
+      
+      <guid>https://www.limxwu.fun/posts/java%E5%8F%91%E5%B1%95%E5%8F%B2.html</guid>
+      
+        <description>&lt;p&gt;  Java已经走过了二十多年的发展史了，作为一门长期霸占排行榜前三甲的编程语言，它被创造出来之时似乎并没有想到会有今天的辉煌，但回顾历史，Java的出现与兴起并非偶然，只是比别人早走了一步。(.net&amp;mdash;&amp;mdash;&amp;mdash;-&amp;gt;(╯°Д°）╯︵ ┻━━━┻）&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>
