@@ -1,0 +1,70 @@
+name: Build and Deploy Hugo Site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# 允许 Actions 写入 Pages、创建令牌
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只跑一个部署，取消进行中的旧任务
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+# 主题要求 Hugo >= 0.128.0（extended）
+# 站点当前线上产物由 Hugo 0.157.0 构建，保持一致
+env:
+  HUGO_VERSION: 0.157.0
+  # Hugo extended >= 0.145 不再内置 Dart Sass，需要单独安装
+  # 注意：必须用 sass/dart-sass 的 standalone 版（>= 1.63.0）
+  # dart-sass-embedded 仓库已停更在 1.62.1，版本过旧会报错
+  DART_SASS_VERSION: 1.105.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive # 拉取 themes/anatole
+          fetch-depth: 0
+
+      - name: Setup Hugo (extended)
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      - name: Install Dart Sass
+        run: |
+          curl -fsSL -o /tmp/dart-sass.tar.gz \
+            "https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz"
+          mkdir -p /tmp/dart-sass
+          tar -xzf /tmp/dart-sass.tar.gz -C /tmp/dart-sass
+          echo "/tmp/dart-sass/dart-sass" >> "$GITHUB_PATH"
+
+      - name: Build with Hugo
+        run: hugo --minify --gc # 保留 hugo.yaml 中的 baseURL: https://www.limxwu.fun，勿用 --baseURL 覆盖
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

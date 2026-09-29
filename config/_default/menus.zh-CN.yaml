@@ -1,0 +1,17 @@
+main:
+  - name: 首页
+    identifier: home
+    weight: 100
+    url: /
+  - name: 归档
+    identifier: posts
+    weight: 200
+    url: /posts/
+  - name: 瞬间
+    identifier: moments
+    weight: 300
+    url: /monment/
+  - name: 关于我
+    identifier: about
+    weight: 400
+    url: /about/

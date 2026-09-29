@@ -1,0 +1,56 @@
+baseURL: https://www.limxwu.fun
+languageCode: zh-cn
+title: 布知花树
+
+theme: anatole
+
+# 开启 CJK 支持，让 Hugo 能按字符统计中文长度
+hasCJKLanguage: true
+summaryLength: 10
+enableRobotsTXT: true
+enableEmoji: true
+enableGitInfo: false
+enableInlineShortcodes: true
+
+# Chroma代码高亮 see https://github.com/lxndrblz/anatole/wiki/%F0%9F%92%85-Appearance#enabling-the-syntax-highlighting
+pygmentsUseClasses: true
+pygmentsCodeFences: true
+pygmentsCodefencesGuessSyntax: true
+
+localizedDates: true
+
+params:
+  mermaid:
+    enable: true
+
+uglyURLs: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block: [['\[', '\]'], ['$$', '$$']]
+          inline: [['\(', '\)']]
+
+taxonomies:
+  category: categories
+  series: series
+  tag: tags
+
+related:
+  includeNewer: true
+  threshold: 80
+  toLower: true
+  indices:
+  - name: keywords
+    weight: 100
+  - name: tags
+    weight: 80
+  
+    
+
+

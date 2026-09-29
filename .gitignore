@@ -1,0 +1,13 @@
+# Hugo 构建产物（由 GitHub Actions 生成，不入库）
+public/
+
+# Hugo 缓存
+resources/
+.hugo_build.lock
+
+# 编辑器/系统
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

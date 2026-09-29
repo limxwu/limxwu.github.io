@@ -1,0 +1,37 @@
+title: 布知花树
+author: limxwu
+description: 春风十里，全在梦里
+profilePicture: images/profile.jpg
+copyright: 2023-{{ YEAR }}
+keywords:
+favicon: favicons
+customCss:
+  # - css/custom.css
+customJs:
+  # - js/custom.js
+
+# 使用静态页面作为首页
+# mainSections:
+#   - posts
+#   - monment
+
+localizedDates: true
+
+contentratio: 0.7
+# 隐藏内容页面的侧边栏
+hidesidebar: false
+
+singleDateFormat: 2006/01/02
+indexDateFormat: 2006/01/02
+listDateFormat: 2006/01/02
+# 禁用博客页面上的标题大小写
+disableTitleCapitalization: true
+# 禁用存档页面上的大写字母显示
+disableArchiveTitleStyling: true
+
+mermaid:
+  enable: true
+
+math:
+  enable: true
+  use: katex
